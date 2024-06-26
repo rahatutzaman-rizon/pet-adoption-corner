@@ -29,9 +29,9 @@ export const Banner = () => {
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.5 }}
                     >
-                        <h1 className='text-4xl lg:text-5xl font-extrabold text-indigo-900 leading-tight'>
+                        <h1 className='text-4xl lg:text-5xl font-extrabold text-indigo-500 leading-tight'>
                             Find Your Perfect
-                            <span className='text-purple-600 block mt-2'>Furry Companion</span>
+                          
                         </h1>
                         <AnimatePresence mode="wait">
                             <motion.p
@@ -45,7 +45,7 @@ export const Banner = () => {
                                 {bannerTexts[currentTextIndex]}
                             </motion.p>
                         </AnimatePresence>
-                        <p className='text-gray-600 text-lg leading-relaxed'>
+                        <p className='text-gray-600 text-sm leading-relaxed'>
                             Embark on a heartwarming journey of pet adoption. Our mission is to connect loving homes with animals in need, creating lifelong bonds and unforgettable memories.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4">

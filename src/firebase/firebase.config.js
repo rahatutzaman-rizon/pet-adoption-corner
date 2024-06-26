@@ -5,13 +5,14 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyD-N7CZCYiVHlF2PkGnvAdmoB5BYIVd75g",
-  authDomain: "pet-adoption-corner.firebaseapp.com",
-  projectId: "pet-adoption-corner",
-  storageBucket: "pet-adoption-corner.appspot.com",
-  messagingSenderId: "857079126869",
-  appId: "1:857079126869:web:433a624e8b284b743b2ddc"
+  apiKey: "AIzaSyB9_M5gmLhqX1h8YWF8R13IzAU2jsOD-Dk",
+  authDomain: "pet-adoption-system-c6c34.firebaseapp.com",
+  projectId: "pet-adoption-system-c6c34",
+  storageBucket: "pet-adoption-system-c6c34.appspot.com",
+  messagingSenderId: "792759944133",
+  appId: "1:792759944133:web:db31d9f7cb6df40edd81ac"
 };
+
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);

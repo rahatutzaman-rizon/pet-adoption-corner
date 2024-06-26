@@ -3,7 +3,7 @@ import App from "../App";
 import { Home } from "../pages/Home/Home";
 
 import { DashboardLayout } from "../Dashboard/DashboardLayout";
-import PrivateRoute from "../PrivateRoute/PrivateRoute";
+
 import Login from "../pages/Login";
 
 
@@ -78,7 +78,7 @@ const router = createBrowserRouter([
     path: "/admin/dashboard",
     element: <DashboardLayout />,
     children: [
-      { path: "/admin/dashboard", element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>},
+      { path: "/admin/dashboard", element: <Dashboard></Dashboard>},
       { path: "/admin/dashboard/mydonation", element: <MyDonation></MyDonation> ,
       loader:()=> fetch('https://assignment-12-server-two-smoky.vercel.app/donation-detail'),
     },

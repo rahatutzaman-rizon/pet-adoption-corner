@@ -107,9 +107,9 @@ const Navbar = () => {
                         </motion.button>
                     )}
 
-                    <motion.div whileHover={{ scale: 1.05 }}>
+                    {/* <motion.div whileHover={{ scale: 1.05 }}>
                         <Link className="btn btn-info rounded-full h-2">{user?.email}</Link>
-                    </motion.div>
+                    </motion.div> */}
 
                     <motion.div whileHover={{ scale: 1.1 }}>
                         <Link to="/admin/dashboard">
