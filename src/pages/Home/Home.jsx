@@ -11,6 +11,7 @@ import { useLoaderData } from 'react-router-dom'
 import CategoryCard from './CategoryCard'
 import About from '../about/About'
 import Ourabout from '../about/Ourabout'
+import Business from './Business'
 
 export const Home = () => {
   const categories = useLoaderData();
@@ -29,7 +30,7 @@ export const Home = () => {
    
 </div>
 
-      
+      <Business></Business>
       
       <FavoriteBook/>
       <PromoBanner/>

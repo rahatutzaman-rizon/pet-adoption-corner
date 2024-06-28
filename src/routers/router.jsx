@@ -35,6 +35,7 @@ import AdoptionRequest from "../Dashboard/PetBoard/AdoptionRequest";
 import Users from "../Dashboard/PetBoard/Admin/Users";
 import AllDonations from "../Dashboard/PetBoard/Admin/AllDonations";
 import AllPets from "../Dashboard/PetBoard/Admin/AllPets";
+import PetFoodPage from "../pages/Shop/Product";
 
 
 const router = createBrowserRouter([
@@ -68,6 +69,12 @@ const router = createBrowserRouter([
         path:"/donation-campign",
         element:<DonationCampign></DonationCampign>,
         loader:()=>fetch('https://assignment-12-server-two-smoky.vercel.app/pet-listing'),
+      },
+
+      {
+        path:"/shop",
+        element:<PetFoodPage></PetFoodPage>,
+       
       },
      
 

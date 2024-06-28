@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import  { useContext, useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FaPaw, FaHeart, FaPlus, FaUserFriends, FaChartBar, FaSignOutAlt, FaDog, FaCat, FaDonate } from 'react-icons/fa';
 import { AuthContext } from '../contexts/AuthProvider';

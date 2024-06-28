@@ -50,8 +50,9 @@ const Navbar = () => {
 
     const navItems = [
         { link: "Home", path: "/" },
-        { link: "Donation-Campign", path: "/donation-campign" },
-        { link: "PetListing", path: "/petlisting" },
+        { link: "Shop", path: "/shop" },
+        { link: "Donation", path: "/donation-campign" },
+        { link: "Pets", path: "/petlisting" },
         { link: "Login", path: "/login" },
         { link: "Dashboard", path: "/admin/dashboard" },
     ];

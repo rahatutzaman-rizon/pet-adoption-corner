@@ -1,7 +1,7 @@
 ## assignment12_category_0008
 
-## admin email : phhero12@gmail.com
-## admin paassword: phhero12@gmail.com
+## admin email : rizon123@gmail.com
+## admin paassword: rizon123@gmail.com
 
 ## live site : https://pet-adoption-30ae0.web.app/
 
