@@ -1,273 +1,134 @@
-import { Button, Label, Select, TextInput, Textarea } from 'flowbite-react';
-
-import  { useState } from 'react'
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-
 import Swal from 'sweetalert2';
+import { motion } from 'framer-motion';
 
-
-  
 const AddPet = () => {
-    const navigate=useNavigate();
+  const navigate = useNavigate();
+  const Categories = ["fish", "bird", "dog", "cat"];
+  const [selectedCategory, setSelectedCategory] = useState(Categories[0]);
 
-    const Categories = [
-        "fish",
-        "bird",
-        "dog",
-        "cat"
-    
-      ];
-    
-    
-      const [selectedBookCategory, setSelectedBookCategory] = useState(
-        Categories[0]
-      );
-    
-      const handleChangeSelectedValue = (event) => {
-        console.log(event.target.value);
-        setSelectedBookCategory(event.target.value);
-      };
-    
-      const handleSubmit = (event) => {
-        event.preventDefault();
-        const form = event.target;
-    
-        const name = form.name.value;
-        const age=form.age.value;
-        const location=form.location.value;
-        const short=form.short.value;
-        const long=form.long.value;
-        const date=form.date.value;
-        const image=form.image.value;
-     
-        const category = form.category.value;
-     
-      
-        const bookObj = {
-          name,
-          age,location,category,short,long,date,image
-        };
-        // console.log(dataObj)
-        fetch("https://assignment-12-server-two-smoky.vercel.app/add-pet", {
-          method: "POST",
-    
-          headers: {
-            "Content-type": "application/json",
-          },
-    
-          body: JSON.stringify(bookObj),
-        })
-        .then(res => res.json())
-        .then(data => {
-            console.log(data);
-            if(data.insertedId){
-                Swal.fire({
-                    title: 'Success!',
-                    text: 'Pet adopt Successfully',
-                    icon: 'success',
-                    confirmButtonText: 'Cool'
-                  })
-                
-                  navigate('/adopt')
-            }
-        })
-}
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const petData = {
+      name: form.name.value,
+      age: form.age.value,
+      location: form.location.value,
+      category: form.category.value,
+      short: form.short.value,
+      long: form.long.value,
+      date: form.date.value,
+      image: form.image.value,
+      adopted: form.adopt.value === 'true'
+    };
 
-    
-    return (
-        <div className='px-4 my-12 bg-cyan-300 mt-24'>
-        <h2 className='mb-8 text-3xl font-bold'>Add a Pet</h2>
-        <form className="flex lg:w-[1180px] flex-col flex-wrap gap-4" onSubmit={handleSubmit}>
-  
-          {/* first row */}
-          <div className='flex gap-8'>
-  
-            
-            <div className='lg:w-1/2'>
-              <div className="mb-2 block">
-                <Label
-                  htmlFor="name"
-                  value="name"
-                />
-              </div>
-              <TextInput
-                id="name"
-                placeholder="Pet Name"
-                required
-                type="text"
-                name='name'
-                className='w-full'
-              />
-            </div>
+    try {
+      const response = await fetch("https://assignment-12-server-two-smoky.vercel.app/add-pet", {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify(petData),
+      });
+      const data = await response.json();
+      if (data.insertedId) {
+        Swal.fire({
+          title: 'Success!',
+          text: 'Pet added successfully',
+          icon: 'success',
+          confirmButtonText: 'Great!'
+        });
+        navigate('/adopt');
+      }
+    } catch (error) {
+      console.error('Error adding pet:', error);
+      Swal.fire({
+        title: 'Error!',
+        text: 'Failed to add pet. Please try again.',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+    }
+  };
 
-
-            <div className='lg:w-1/2'>
-              <div className="mb-2 block">
-                <Label
-                  htmlFor="Adopted"
-                  value="adopt"
-                />
+  return (
+    <motion.div 
+      initial={{ opacity: 0 }} 
+      animate={{ opacity: 1 }} 
+      transition={{ duration: 0.5 }}
+      className="min-h-screen bg-gradient-to-r from-cyan-100 to-blue-100 py-12 px-4 sm:px-6 lg:px-8"
+    >
+      <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-xl overflow-hidden">
+        <div className="px-4 py-5 sm:p-6">
+          <h2 className="text-3xl font-extrabold text-gray-900 text-center mb-6">Add a New Pet</h2>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-2">
+              <div>
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700">Pet Name</label>
+                <input type="text" name="name" id="name" required className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
               </div>
-              <TextInput
-                id="adopt"
-                placeholder="true/false"
-                required
-                type="text"
-                name='adopt'
-                className='w-full'
-              />
+              <div>
+                <label htmlFor="age" className="block text-sm font-medium text-gray-700">Age</label>
+                <input type="number" name="age" id="age" required className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+              </div>
+              <div>
+                <label htmlFor="location" className="block text-sm font-medium text-gray-700">Location</label>
+                <input type="text" name="location" id="location" required className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+              </div>
+              <div>
+                <label htmlFor="category" className="block text-sm font-medium text-gray-700">Category</label>
+                <select
+                  id="category"
+                  name="category"
+                  className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                  value={selectedCategory}
+                  onChange={(e) => setSelectedCategory(e.target.value)}
+                >
+                  {Categories.map((category) => (
+                    <option key={category} value={category}>
+                      {category.charAt(0).toUpperCase() + category.slice(1)}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label htmlFor="date" className="block text-sm font-medium text-gray-700">Date</label>
+                <input type="date" name="date" id="date" required className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+              </div>
+              <div>
+                <label htmlFor="adopt" className="block text-sm font-medium text-gray-700">Adopted</label>
+                <select name="adopt" id="adopt" required className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                  <option value="false">No</option>
+                  <option value="true">Yes</option>
+                </select>
+              </div>
             </div>
-  
-          
-            <div className='lg:w-1/2'>
-              <div className="mb-2 block">
-                <Label
-                  htmlFor="age"
-                  value="age"
-                />
-              </div>
-              <TextInput
-                id="author"
-                placeholder="age"
-                required
-                type="number"
-                name='age'
-                className='w-full'
-              />
+            <div>
+              <label htmlFor="image" className="block text-sm font-medium text-gray-700">Image URL</label>
+              <input type="text" name="image" id="image" required className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
             </div>
-  
-          </div>
-   <br></br>
-          <div className='lg:w-1/2'>
-              <div className="mb-2 block">
-                <Label
-                  htmlFor="location"
-                  value="location"
-                />
-              </div>
-              <TextInput
-                id="location"
-                placeholder="location"
-                required
-                type="text"
-                name='location'
-                className='w-full'
-              />
+            <div>
+              <label htmlFor="short" className="block text-sm font-medium text-gray-700">Short Description</label>
+              <textarea name="short" id="short" rows="3" required className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"></textarea>
             </div>
-  
-          
-  
-  
-  
-          {/* 2nd Row */}
-          <div className='flex gap-8'>
-           
-            <div className='lg:w-1/2'>
-              <div className="mb-2 block">
-                <Label
-                  htmlFor="inputState"
-                  value=" Category"
-                />
-              </div>
-              <Select
-                id="inputState"
-                name="category"
-                className="w-full rounded"
-                value={selectedBookCategory}
-                onChange={handleChangeSelectedValue}
+            <div>
+              <label htmlFor="long" className="block text-sm font-medium text-gray-700">Long Description</label>
+              <textarea name="long" id="long" rows="5" required className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"></textarea>
+            </div>
+            <div>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                type="submit"
+                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
-                {Categories.map((option) => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </Select>
+                Add Pet
+              </motion.button>
             </div>
-  
-          </div>
-
-          <div className="form-control md:w-1/2 ml-4">
-                    <label className="label">
-                        <span className="label-text">date</span>
-                    </label>
-                    <label className="input-group">
-                        <input type="date" name="date"  placeholder="date" className="input input-bordered w-full" />
-                    </label>
-                </div>
-  
-         
-  
-          <div className=''>
-            <div className="mb-2 block">
-              <Label
-                htmlFor="short"
-                value="short"
-              />
-            </div>
-            <Textarea
-              id="short"
-              placeholder="short"
-              required
-              type="text"
-              name='short'
-              className='w-1/5'
-              rows={4}
-            />
-          </div>
-
-
-          <div className='flex gap-4'>
-         
-          <div className='lg:w-1/2'>
-            <div className="mb-2 block">
-              <Label
-                htmlFor="image"
-                value="image"
-              />
-            </div>
-            <TextInput
-              id="image"
-              placeholder="Image URL"
-              required
-              type="text"
-              name='image'
-              className='w-full'
-            />
-          </div>
-          </div>
-       
-          <div>
-            <div className="mb-2 block">
-              <Label
-                htmlFor="long"
-                value="long"
-              />
-            </div>
-            <Textarea
-              id='long'
-              placeholder="long"
-              required
-              type="text"
-              name='long'
-              className='w-1/5'
-              rows={4}
-            />
-          </div>
-  
-          
-  
-         
-  
-          {/* Submit btn */}
-          <Button className="bg-red-300 mt-5" type="submit" 
-          >
-           Add Pet
-          </Button>
-  
-        </form>
+          </form>
+        </div>
       </div>
-    );
+    </motion.div>
+  );
 };
 
 export default AddPet;

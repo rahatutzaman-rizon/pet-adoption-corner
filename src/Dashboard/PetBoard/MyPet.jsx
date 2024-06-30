@@ -1,128 +1,148 @@
-import { useLoaderData, useNavigate } from "react-router-dom";
-
-import { Table } from 'flowbite-react'
-import  { useEffect, useState } from 'react'
-import { Pagination } from 'flowbite-react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useLoaderData, useNavigate, Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import { motion } from 'framer-motion';
+
 const MyPet = () => {
-  const mypet=useLoaderData();
-  const navigate=useNavigate()
-  const [allBooks, setAllBooks] = useState(mypet);
+  const initialPets = useLoaderData();
+  const navigate = useNavigate();
+  const [allPets, setAllPets] = useState(initialPets);
+  const [currentPage, setCurrentPage] = useState(1);
+  const petsPerPage = 10;
+
   useEffect(() => {
-      fetch(`https://assignment-12-server-two-smoky.vercel.app/add-pet`)
-          .then((res) => res.json())
-          .then((data) => {
-              // console.log(data);
-              setAllBooks(data);
-          });
+    fetch(`https://assignment-12-server-two-smoky.vercel.app/add-pet`)
+      .then((res) => res.json())
+      .then((data) => setAllPets(data));
   }, []);
 
-  // delete a books
-  const  handledelete =_id=>{
-   
-    fetch(`https://assignment-12-server-two-smoky.vercel.app/add-pet/${_id}`, {
-      method: "DELETE",
-  })
-.then(res=>res.json())
-.then(data =>{
-console.log(data);
-if(data.deletedCount>0){
-  Swal.fire({
-    title: 'Success!',
-    text: 'Deleted Successfully',
-    icon: 'success',
-    confirmButtonText: 'Cool'
-
-  })
-
-  const remaining=allBooks.filter(user => user._id !==_id);
-  setAllBooks(remaining);
-
-  navigate('/admin/dashboard/my-pet')
-}
-})
-
-}
-
-  // pagination
-  const [currentPage, setCurrentPage] = useState(1);
-  const onPageChange = () => setCurrentPage(page);
-
-    return (
-      <div className='px-4 my-12 mt-12'>
-      <h2 className='mb-8 text-3xl font-bold'>Managememnt My Pet</h2>
-
-      {/* table */}
-
-      <Table className='lg:w-[1180px]'>
-          <Table.Head>
-              <Table.HeadCell>
-                  No.
-              </Table.HeadCell>
-              <Table.HeadCell>
-                  Edit or Manage
-              </Table.HeadCell>
-              <Table.HeadCell>
-                  Pet name
-              </Table.HeadCell>
-              <Table.HeadCell>
-                 Adopted
-              </Table.HeadCell>
-              <Table.HeadCell>
-                  Category
-              </Table.HeadCell>
-             
-              
-          </Table.Head>
-
-          {
-              allBooks.map((pet, index) => <Table.Body className="divide-y" key={pet._id}>
-                  <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                      <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                          {index + 1}
-                      </Table.Cell>
-                      <Table.Cell>
-                          <Link
-                              className="font-medium text-cyan-300 hover:underline dark:text-cyan-500 mr-5 btn btn-danger"
-                              to={`/admin/dashboard/add-pet/${pet._id}`}
-                          >
-                              Edit
-                          </Link>
-                          <button className='bg-teal-600 px-4 py-1 font-semibold text-white rounded-sm hover:bg-sky-600 ' onClick={() => handledelete(pet._id)}>Delete</button>
-
-                      </Table.Cell>
-                      <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                          {pet.name}
-                      </Table.Cell>
-                      <Table.Cell>
-                          False
-                      </Table.Cell>
-                      <Table.Cell>
-                          {pet.category}
-                      </Table.Cell>
-                      
-                      
-                      
-                  </Table.Row>
-              </Table.Body>)
+  const handleDelete = (_id) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`https://assignment-12-server-two-smoky.vercel.app/add-pet/${_id}`, {
+          method: "DELETE",
+        })
+        .then(res => res.json())
+        .then(data => {
+          if (data.deletedCount > 0) {
+            Swal.fire(
+              'Deleted!',
+              'Your pet has been removed.',
+              'success'
+            )
+            const remaining = allPets.filter(pet => pet._id !== _id);
+            setAllPets(remaining);
+            navigate('/admin/dashboard/my-pet')
           }
-      </Table>
+        })
+      }
+    })
+  }
 
-      {/* pagination */}
-      <div className="flex items-center justify-center text-center mt-8">
-          <Pagination
-              currentPage={1}
-              layout="pagination"
-              nextLabel="Go forward"
-              onPageChange={page => { setCurrentPage(page) }}
-              previousLabel="Go back"
-              showIcons
-              totalPages={1000}
-          />
+  // Pagination logic
+  const indexOfLastPet = currentPage * petsPerPage;
+  const indexOfFirstPet = indexOfLastPet - petsPerPage;
+  const currentPets = allPets.slice(indexOfFirstPet, indexOfLastPet);
+  const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(allPets.length / petsPerPage); i++) {
+    pageNumbers.push(i);
+  }
+
+  return (
+    <motion.div 
+      initial={{ opacity: 0 }} 
+      animate={{ opacity: 1 }} 
+      transition={{ duration: 0.5 }}
+      className="container mx-auto px-4 py-8"
+    >
+      <h2 className='mb-6 text-3xl font-bold text-gray-800'>Manage My Pets</h2>
+
+      <div className="overflow-x-auto bg-white shadow-md rounded-lg">
+        <table className="min-w-full leading-normal">
+          <thead>
+            <tr>
+              <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                No.
+              </th>
+              <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                Pet Name
+              </th>
+              <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                Adopted
+              </th>
+              <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                Category
+              </th>
+              <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {currentPets.map((pet, index) => (
+              <tr key={pet._id}>
+                <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                  {indexOfFirstPet + index + 1}
+                </td>
+                <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                  <p className="text-gray-900 whitespace-no-wrap">{pet.name}</p>
+                </td>
+                <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                  <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
+                    <span aria-hidden className="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
+                    <span className="relative">False</span>
+                  </span>
+                </td>
+                <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                  <p className="text-gray-900 whitespace-no-wrap">{pet.category}</p>
+                </td>
+                <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                  <Link
+                    to={`/admin/dashboard/add-pet/${pet._id}`}
+                    className="text-indigo-600 hover:text-indigo-900 mr-4"
+                  >
+                    Edit
+                  </Link>
+                  <button
+                    onClick={() => handleDelete(pet._id)}
+                    className="text-red-600 hover:text-red-900"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
-  </div>
-    );
+
+      {/* Pagination */}
+      <div className="flex justify-center mt-6">
+        <nav>
+          <ul className="flex list-none">
+            {pageNumbers.map(number => (
+              <li key={number} className="mx-1">
+                <button
+                  onClick={() => setCurrentPage(number)}
+                  className={`px-3 py-1 rounded ${currentPage === number ? 'bg-indigo-500 text-white' : 'bg-gray-200'}`}
+                >
+                  {number}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </div>
+    </motion.div>
+  );
 };
 
 export default MyPet;

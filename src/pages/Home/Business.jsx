@@ -14,7 +14,7 @@ const Business = () => {
           className="text-center"
         >
           <h1 className="text-5xl font-extrabold text-gray-900 sm:text-6xl md:text-7xl">
-            <span className="block">Pawsome Deals!</span>
+            <span className="block">Awesome Deals!</span>
             <span className="block text-indigo-600 mt-2">10% OFF All Pet Food</span>
           </h1>
           <p className="mt-6 max-w-md mx-auto text-xl text-gray-500 sm:text-2xl md:mt-8 md:max-w-3xl">
@@ -37,13 +37,13 @@ const Business = () => {
               <FaShoppingCart className="mr-2" />
               Shop Now
             </Link>
-            <Link
-              to="/promotion-details"
+            <h2
+             
               className="flex items-center justify-center px-8 py-4 border border-transparent text-lg font-semibold rounded-full shadow-sm text-indigo-700 bg-indigo-100 hover:bg-indigo-200 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105"
             >
-              <FaPercent className="mr-2" />
-              Offer Details
-            </Link>
+              10%
+               discounts
+            </h2>
           </div>
         </motion.div>
 

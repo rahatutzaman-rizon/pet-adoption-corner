@@ -1,82 +1,113 @@
-import { useState } from "react";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useLoaderData } from "react-router-dom";
 import Swal from "sweetalert2";
+import { motion } from "framer-motion";
+import { FaPaw, FaTrash, FaSearch } from "react-icons/fa";
 
 const AllPets = () => {
-const  allpets=useLoaderData();
+  const allPets = useLoaderData();
+  const [pets, setPets] = useState(allPets);
+  const [searchTerm, setSearchTerm] = useState("");
 
+  useEffect(() => {
+    document.title = "Admin Dashboard | All Pets";
+  }, []);
 
-const navigate=useNavigate();
- 
-    
-const [users,setUsers]=useState(allpets);
+  const handleDelete = async (_id) => {
+    const result = await Swal.fire({
+      title: 'Delete pet?',
+      text: "This action cannot be undone.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Delete'
+    });
 
-const  handledelete =_id=>{
-  
-  fetch(`https://assignment-12-server-two-smoky.vercel.app/pet-listing/${_id}`, {
-    method: "DELETE",
-})
-.then(res=>res.json())
-.then(data =>{
-console.log(data);
-if(data.deletedCount>0){
-Swal.fire({
-  title: 'Success!',
-  text: 'Users pet delete Successfully',
-  icon: 'success',
-  confirmButtonText: 'Cool'
+    if (result.isConfirmed) {
+      try {
+        const response = await fetch(`https://assignment-12-server-two-smoky.vercel.app/pet-listing/${_id}`, {
+          method: "DELETE",
+        });
+        const data = await response.json();
 
-})
+        if (data.deletedCount > 0) {
+          Swal.fire('Deleted!', 'The pet has been removed.', 'success');
+          setPets(pets.filter(pet => pet._id !== _id));
+        }
+      } catch (error) {
+        Swal.fire('Error!', 'Failed to delete the pet.', 'error');
+      }
+    }
+  };
 
-const remaining=users.filter(user => user._id !==_id);
-setUsers(remaining);
+  const filteredPets = pets.filter(pet => 
+    pet.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    pet.category.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
-navigate('/admin/dashboard/allpets')
-}
-})
-}
+  return (
+    <div className="max-w-4xl mx-auto p-4">
+      <motion.h1 
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="text-3xl font-bold text-center mb-6"
+      >
+        All Pets
+      </motion.h1>
 
-    return (
-        <div>
-        <div>
-       <div className="container mx-auto mt-24">
- <table className="min-w-full bg-cyan-300  border border-gray-300">
-   <thead>
-     <tr>
-       
-       <th className="py-2 px-4 border-b">Pet Name</th>
-       <th className="py-2 px-4 border-b">Category</th>
-       <th className="py-2 px-4 border-b">Age</th>
-       <th className="py-2 px-4 border-b"> Desc </th>
-       <th className="py-2 px-4 border-b">Location</th>
-     </tr>
-   </thead>
-   <tbody>
-     {allpets.map((campaign,idx) => (
-       <tr key={idx}>
-         
-         <td className="py-2 px-4 border-b">{campaign.name}</td>
-         <td className="py-2 px-4 border-b">{campaign.category}</td>
-         <td className="py-2 px-4 border-b">{campaign.age}</td>
-         <td className="py-2 px-4 border-b">{campaign.short_description}</td>
-         <td className="py-2 px-4 border-b">{campaign.location}</td>
-        
-         <td className="py-2 px-4 border-b">
-           <button
-             onClick={() => handledelete(campaign._id)}
-             className="bg-teal-500 text-white py-1 px-2 rounded"
-           >
-          Delete
-           </button>
-         </td>
-       </tr>
-     ))}
-   </tbody>
- </table>
-</div>
-   </div>
-   </div>
-    );
+      <div className="mb-4 relative">
+        <input
+          type="text"
+          placeholder="Search pets..."
+          className="w-full p-2 pl-10 border rounded"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        <FaSearch className="absolute left-3 top-3 text-gray-400" />
+      </div>
+
+      <div className="bg-white shadow rounded-lg overflow-hidden">
+        <table className="min-w-full">
+          <thead className="bg-gray-50">
+            <tr>
+              <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
+              <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Category</th>
+              <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Age</th>
+              <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredPets.map((pet) => (
+              <motion.tr 
+                key={pet._id}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              >
+                <td className="px-4 py-2">
+                  <div className="flex items-center">
+                    <FaPaw className="h-5 w-5 text-purple-400 mr-2" />
+                    <span>{pet.name}</span>
+                  </div>
+                </td>
+                <td className="px-4 py-2">{pet.category}</td>
+                <td className="px-4 py-2">{pet.age}</td>
+                <td className="px-4 py-2">
+                  <button
+                    onClick={() => handleDelete(pet._id)}
+                    className="text-red-500 hover:text-red-700"
+                  >
+                    <FaTrash />
+                  </button>
+                </td>
+              </motion.tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
 };
 
 export default AllPets;

@@ -36,6 +36,7 @@ import Users from "../Dashboard/PetBoard/Admin/Users";
 import AllDonations from "../Dashboard/PetBoard/Admin/AllDonations";
 import AllPets from "../Dashboard/PetBoard/Admin/AllPets";
 import PetFoodPage from "../pages/Shop/Product";
+import OrderTable from "../pages/Shop/Order";
 
 
 const router = createBrowserRouter([
@@ -114,6 +115,12 @@ const router = createBrowserRouter([
   loader: () => fetch("https://assignment-12-server-two-smoky.vercel.app/users ")
   
 }, 
+{ path: "/admin/dashboard/order", element: <OrderTable></OrderTable>,
+ 
+  
+}, 
+
+
  { path: "/admin/dashboard/alldonations", element: <AllDonations></AllDonations>,
 loader: () => fetch("https://assignment-12-server-two-smoky.vercel.app/adopt")
 },  { path: "/admin/dashboard/allpets", element: <AllPets></AllPets>,

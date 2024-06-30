@@ -7,17 +7,17 @@ export const DashboardLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   return (
-    <div className="flex h-screen bg-gradient-to-br from-cyan-100 to-blue-200">
+    <div className="flex h-screen bg-gradient-to-br from-cyan-100 to-blue-100">
       <motion.div
         initial={{ x: -250 }}
-        animate={{ x: isSidebarOpen ? 0 : -250 }}
+        animate={{ x: isSidebarOpen ? 0 : -100 }}
         transition={{ duration: 0.3 }}
-        className="w-64 bg-white shadow-lg"
+        className="w-1/5 bg-white shadow-lg"
       >
         <SideBar />
       </motion.div>
 
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="flex-1 flex flex-col ">
         <header className="bg-white shadow-sm">
           <div className="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
             <motion.button
@@ -34,7 +34,7 @@ export const DashboardLayout = () => {
           </div>
         </header>
 
-        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100">
+        <main className="flex-1  bg-gray-100">
           <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}

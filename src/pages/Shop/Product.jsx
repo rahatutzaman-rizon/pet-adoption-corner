@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import  { useState, useEffect, useContext } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
 import Swal from 'sweetalert2';
@@ -25,7 +25,7 @@ const PetFoodPage = () => {
   useEffect(() => {
     const fetchPetFoods = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/shop');
+        const response = await axios.get('https://assignment-12-server-two-smoky.vercel.app/shop');
         setPetFoods(response.data);
         setLoading(false);
       } catch (error) {
@@ -41,7 +41,7 @@ const PetFoodPage = () => {
     const orderDetails = { ...food, quantity, email, phone, client };
     console.log('Adding to cart:', orderDetails); // Debug log
     try {
-      await axios.post('http://localhost:5000/order', orderDetails);
+      await axios.post('https://assignment-12-server-two-smoky.vercel.app/order', orderDetails);
       setCartItems([...cartItems, orderDetails]);
       setSelectedFood(null);
       Swal.fire({

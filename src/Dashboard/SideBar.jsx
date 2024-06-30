@@ -1,6 +1,6 @@
 import  { useContext, useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { FaPaw, FaHeart, FaPlus, FaUserFriends, FaChartBar, FaSignOutAlt, FaDog, FaCat, FaDonate } from 'react-icons/fa';
+import { FaPaw, FaHeart, FaPlus, FaUserFriends, FaChartBar, FaSignOutAlt, FaDog, FaCat, FaDonate, FaFirstOrderAlt } from 'react-icons/fa';
 import { AuthContext } from '../contexts/AuthProvider';
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
@@ -42,11 +42,12 @@ const Sidebar = () => {
     { name: 'Users', icon: <FaUserFriends />, href: '/admin/dashboard/users' },
     { name: 'All Donations', icon: <FaHeart />, href: '/admin/dashboard/alldonations' },
     { name: 'All Pets', icon: <FaPaw />, href: '/admin/dashboard/allpets' },
+    {name:"Order",icon:<FaFirstOrderAlt></FaFirstOrderAlt>,href:"/admin/dashboard/order"}
   ];
 
   return (
-    <div className="bg-gray-100 min-h-screen flex mt-12">
-      <aside className="bg-white w-64 min-h-screen flex flex-col shadow-lg">
+    <div className="bg-gray-100 flex mt-14">
+      <aside className="bg-white  flex flex-col shadow-lg">
         <div className="p-4">
           <div className="flex items-center justify-center mb-6">
             <div className="w-20 h-20 rounded-full overflow-hidden ring-2 ring-blue-500">
@@ -102,10 +103,10 @@ const Sidebar = () => {
           </ul>
         </nav>
         <div className="p-4">
-          {/* <Link to="/logout" className="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200">
+          <Link to="/logout" className="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200">
             <FaSignOutAlt className="mr-3" />
             <span>Log out</span>
-          </Link> */}
+          </Link>
         </div>
       </aside>
       <main className="flex-1 p-6">
