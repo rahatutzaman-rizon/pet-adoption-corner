@@ -7,12 +7,12 @@ export const DashboardLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   return (
-    <div className="flex h-screen bg-gradient-to-br from-cyan-100 to-blue-100">
+    <div className="flex h-screen bg-gradient-to-br from-teal-400 to-blue-100">
       <motion.div
         initial={{ x: -250 }}
         animate={{ x: isSidebarOpen ? 0 : -100 }}
         transition={{ duration: 0.3 }}
-        className="w-1/5 bg-white shadow-lg"
+        className="w-1/6 bg-white shadow-lg"
       >
         <SideBar />
       </motion.div>
