@@ -55,7 +55,7 @@ const AddPet = () => {
       initial={{ opacity: 0 }} 
       animate={{ opacity: 1 }} 
       transition={{ duration: 0.5 }}
-      className="min-h-screen bg-gradient-to-r from-cyan-100 to-blue-100 py-12 px-4 sm:px-6 lg:px-8"
+      className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8"
     >
       <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-xl overflow-hidden">
         <div className="px-4 py-5 sm:p-6">

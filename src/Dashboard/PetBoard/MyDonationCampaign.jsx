@@ -13,7 +13,7 @@ const MyDonationCampaign = () => {
       transition={{ duration: 0.5 }}
       className="container mx-auto px-4 py-8"
     >
-      <h2 className="text-3xl font-bold text-gray-800 mb-6">My Donation Campaigns</h2>
+      <h2 className="text-3xl font-bold text-gray-100 mb-6">My Donation Campaigns</h2>
       <div className="overflow-x-auto bg-white shadow-md rounded-lg">
         <table className="min-w-full leading-normal">
           <thead>

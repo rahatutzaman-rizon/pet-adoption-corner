@@ -1,11 +1,11 @@
-import  { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FaPaw, FaHeart, FaPlus, FaUserFriends, FaChartBar, FaSignOutAlt, FaDog, FaCat, FaDonate, FaFirstOrderAlt } from 'react-icons/fa';
 import { AuthContext } from '../contexts/AuthProvider';
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
 
-const Sidebar = () => {
+const Sidebar = ({ closeSidebar }) => {
   const [role, setRole] = useState("");
   const { user } = useContext(AuthContext);
   const location = useLocation();
@@ -46,72 +46,69 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className="bg-gray-100 flex mt-14">
-      <aside className="bg-white  flex flex-col shadow-lg">
-        <div className="p-4">
-          <div className="flex items-center justify-center mb-6">
-            <div className="w-20 h-20 rounded-full overflow-hidden ring-2 ring-blue-500">
-              <img 
-                src={user?.photoURL || "https://i.ibb.co/M8zLm51/pet.jpg"} 
-                alt="User avatar"
-                className="w-full h-full object-cover"
-              />
-            </div>
+    <div className="h-full flex flex-col bg-white shadow-lg">
+      <div className="p-4">
+        <div className="flex items-center justify-center mb-6">
+          <div className="w-20 h-20 rounded-full overflow-hidden ring-2 ring-blue-500">
+            <img 
+              src={user?.photoURL || "https://i.ibb.co/M8zLm51/pet.jpg"} 
+              alt="User avatar"
+              className="w-full h-full object-cover"
+            />
           </div>
-          <h2 className="text-xl font-semibold text-center mb-6">{user?.displayName || "Demo User"}</h2>
         </div>
-        <nav className="flex-1 overflow-y-auto">
-          <ul className="px-2">
-            {navItems.map((item, index) => (
-              <li key={index} className="mb-2">
-                <Link
-                  to={item.href}
-                  className={`flex items-center p-2 rounded-lg transition-colors duration-200 ${
-                    location.pathname === item.href
-                      ? 'bg-blue-500 text-white'
-                      : 'hover:bg-gray-100 text-gray-700'
-                  }`}
-                >
-                  <span className="mr-3">{item.icon}</span>
-                  <span>{item.name}</span>
-                </Link>
+        <h2 className="text-xl font-semibold text-center mb-6">{user?.displayName || "Demo User"}</h2>
+      </div>
+      <nav className="flex-1 overflow-y-auto">
+        <ul className="px-2">
+          {navItems.map((item, index) => (
+            <li key={index} className="mb-2">
+              <Link
+                to={item.href}
+                onClick={closeSidebar}
+                className={`flex items-center p-2 rounded-lg transition-colors duration-200 ${
+                  location.pathname === item.href
+                    ? 'bg-blue-500 text-white'
+                    : 'hover:bg-gray-100 text-gray-700'
+                }`}
+              >
+                <span className="mr-3">{item.icon}</span>
+                <span>{item.name}</span>
+              </Link>
+            </li>
+          ))}
+          
+          {role === "admin" && (
+            <>
+              <li className="mt-6 mb-2 px-2 text-xs font-semibold text-gray-400 uppercase">
+                Admin
               </li>
-            ))}
-            
-            {role === "admin" && (
-              <>
-                <li className="mt-6 mb-2 px-2 text-xs font-semibold text-gray-400 uppercase">
-                  Admin
+              {adminItems.map((item, index) => (
+                <li key={index} className="mb-2">
+                  <Link
+                    to={item.href}
+                    onClick={closeSidebar}
+                    className={`flex items-center p-2 rounded-lg transition-colors duration-200 ${
+                      location.pathname === item.href
+                        ? 'bg-blue-500 text-white'
+                        : 'hover:bg-gray-100 text-gray-700'
+                    }`}
+                  >
+                    <span className="mr-3">{item.icon}</span>
+                    <span>{item.name}</span>
+                  </Link>
                 </li>
-                {adminItems.map((item, index) => (
-                  <li key={index} className="mb-2">
-                    <Link
-                      to={item.href}
-                      className={`flex items-center p-2 rounded-lg transition-colors duration-200 ${
-                        location.pathname === item.href
-                          ? 'bg-blue-500 text-white'
-                          : 'hover:bg-gray-100 text-gray-700'
-                      }`}
-                    >
-                      <span className="mr-3">{item.icon}</span>
-                      <span>{item.name}</span>
-                    </Link>
-                  </li>
-                ))}
-              </>
-            )}
-          </ul>
-        </nav>
-        <div className="p-4">
-          <Link to="/logout" className="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200">
-            <FaSignOutAlt className="mr-3" />
-            <span>Log out</span>
-          </Link>
-        </div>
-      </aside>
-      <main className="flex-1 p-6">
-        {/* Main content goes here */}
-      </main>
+              ))}
+            </>
+          )}
+        </ul>
+      </nav>
+      <div className="p-4">
+        <Link to="/logout" onClick={closeSidebar} className="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200">
+          <FaSignOutAlt className="mr-3" />
+          <span>Log out</span>
+        </Link>
+      </div>
     </div>
   );
 };

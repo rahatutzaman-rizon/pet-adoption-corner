@@ -112,7 +112,7 @@ const MyDonation = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="min-h-screen bg-gradient-to-b from-blue-100 to-white py-12 px-4 sm:px-6 lg:px-8"
+      className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8"
     >
       <div className="max-w-7xl mx-auto">
         <h1 className="text-4xl font-extrabold text-center text-gray-900 mb-10">

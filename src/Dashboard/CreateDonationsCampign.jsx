@@ -48,7 +48,7 @@ const CreateDonationsCampign = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-cyan-50 to-blue-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-xl overflow-hidden">
         <div className="px-4 py-5 sm:p-6">
           <h2 className="text-3xl font-extrabold text-gray-900 text-center mb-6">Create Donation Campaign</h2>

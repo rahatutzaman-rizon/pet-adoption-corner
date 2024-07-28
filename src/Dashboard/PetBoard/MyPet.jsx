@@ -63,7 +63,7 @@ const MyPet = () => {
       transition={{ duration: 0.5 }}
       className="container mx-auto px-4 py-8"
     >
-      <h2 className='mb-6 text-3xl font-bold text-gray-800'>Manage My Pets</h2>
+      <h2 className='mb-6 text-3xl font-bold text-gray-100'>Manage My Pets</h2>
 
       <div className="overflow-x-auto bg-white shadow-md rounded-lg">
         <table className="min-w-full leading-normal">
