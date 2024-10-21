@@ -1,5 +1,5 @@
+import  { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState, useEffect } from 'react';
 import { FaPaw, FaHeart, FaSearch, FaInfoCircle } from 'react-icons/fa';
 
 const bannerTexts = [
@@ -9,7 +9,33 @@ const bannerTexts = [
     "Spreading unconditional love"
 ];
 
-export const Banner = () => {
+const BannerText = ({ text }) => (
+    <motion.p
+        key={text}
+        className='text-xl text-gray-700 font-medium'
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -20 }}
+        transition={{ duration: 0.5 }}
+    >
+        {text}
+    </motion.p>
+);
+
+const FeatureCard = ({ icon: Icon, title, description }) => (
+    <motion.div 
+        className="bg-white rounded-lg shadow-md p-6 flex flex-col items-center text-center"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+    >
+        <Icon className="text-primary-600 text-4xl mb-4" />
+        <h3 className="font-semibold text-lg text-gray-800 mb-2">{title}</h3>
+        <p className="text-gray-600">{description}</p>
+    </motion.div>
+);
+
+export default function Bannertext() {
     const [currentTextIndex, setCurrentTextIndex] = useState(0);
 
     useEffect(() => {
@@ -20,7 +46,7 @@ export const Banner = () => {
     }, []);
 
     return (
-        <div className='bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 min-h-screen flex items-center'>
+        <div className='bg-gradient-to-br from-primary-100 via-secondary-100 to-primary-200 min-h-screen '>
             <div className='container mx-auto px-4 py-16 lg:py-24'>
                 <div className='flex flex-col lg:flex-row items-center justify-between gap-12'>
                     <motion.div 
@@ -29,28 +55,18 @@ export const Banner = () => {
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.5 }}
                     >
-                        <h1 className='text-4xl lg:text-5xl font-extrabold text-indigo-500 leading-tight'>
-                            Find Your Perfect
-                          
+                        <h1 className='text-4xl lg:text-5xl font-extrabold text-primary-600 leading-tight'>
+                            Find Your Perfect Pet Companion
                         </h1>
                         <AnimatePresence mode="wait">
-                            <motion.p
-                                key={currentTextIndex}
-                                className='text-xl text-gray-700 font-medium'
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: -20 }}
-                                transition={{ duration: 0.5 }}
-                            >
-                                {bannerTexts[currentTextIndex]}
-                            </motion.p>
+                            <BannerText text={bannerTexts[currentTextIndex]} />
                         </AnimatePresence>
-                        <p className='text-gray-600 text-sm leading-relaxed'>
+                        <p className='text-gray-700 text-lg leading-relaxed'>
                             Embark on a heartwarming journey of pet adoption. Our mission is to connect loving homes with animals in need, creating lifelong bonds and unforgettable memories.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4">
                             <motion.button 
-                                className='bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-8 py-4 rounded-full font-semibold flex items-center justify-center gap-2 hover:from-purple-700 hover:to-indigo-700 transition duration-300 shadow-lg'
+                                className='bg-primary-600 text-white px-8 py-4 rounded-full font-semibold flex items-center justify-center gap-2 hover:bg-primary-700 transition duration-300 shadow-lg'
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
                             >
@@ -58,7 +74,7 @@ export const Banner = () => {
                                 Find a Pet
                             </motion.button>
                             <motion.button 
-                                className='bg-white text-purple-600 border-2 border-purple-600 px-8 py-4 rounded-full font-semibold flex items-center justify-center gap-2 hover:bg-purple-50 transition duration-300 shadow-lg'
+                                className='bg-white text-primary-600 border-2 border-primary-600 px-8 py-4 rounded-full font-semibold flex items-center justify-center gap-2 hover:bg-primary-50 transition duration-300 shadow-lg'
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
                             >
@@ -94,7 +110,7 @@ export const Banner = () => {
                                 animate={{ y: 0, opacity: 1 }}
                                 transition={{ delay: 0.5 }}
                             >
-                                <FaHeart className="text-red-500 text-xl" />
+                                <FaHeart className="text-secondary-500 text-xl" />
                                 <span className="text-gray-800 font-semibold">Find your perfect match</span>
                             </motion.div>
                         </div>
@@ -107,30 +123,26 @@ export const Banner = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.4 }}
                 >
-                    <h2 className="text-2xl font-bold text-indigo-900 mb-4">Why Choose Pet Adoption?</h2>
+                    <h2 className="text-3xl font-bold text-primary-900 mb-8 text-center">Why Choose Pet Adoption?</h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {[
-                            { icon: FaPaw, title: "Save a Life", description: "Give a homeless pet a second chance at happiness." },
-                            { icon: FaHeart, title: "Unconditional Love", description: "Experience the joy of a devoted animal companion." },
-                            { icon: FaSearch, title: "Find Your Match", description: "Discover the perfect pet that fits your lifestyle." }
-                        ].map((item, index) => (
-                            <motion.div 
-                                key={index}
-                                className="flex items-start space-x-4"
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
-                            >
-                                <item.icon className="text-purple-600 text-3xl flex-shrink-0" />
-                                <div>
-                                    <h3 className="font-semibold text-lg text-gray-800">{item.title}</h3>
-                                    <p className="text-gray-600">{item.description}</p>
-                                </div>
-                            </motion.div>
-                        ))}
+                        <FeatureCard 
+                            icon={FaPaw}
+                            title="Save a Life"
+                            description="Give a homeless pet a second chance at happiness and a loving home."
+                        />
+                        <FeatureCard 
+                            icon={FaHeart}
+                            title="Unconditional Love"
+                            description="Experience the joy and companionship of a devoted animal friend."
+                        />
+                        <FeatureCard 
+                            icon={FaSearch}
+                            title="Find Your Match"
+                            description="Discover the perfect pet that fits your lifestyle and family."
+                        />
                     </div>
                 </motion.div>
             </div>
         </div>
-    )
+    );
 }

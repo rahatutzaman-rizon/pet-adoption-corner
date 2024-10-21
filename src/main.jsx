@@ -7,9 +7,7 @@ import { RouterProvider } from 'react-router-dom'
 import AuthProvider from './contexts/AuthProvider.jsx'
 
 import {
-  useQuery,
-  useMutation,
-  useQueryClient,
+  
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query'

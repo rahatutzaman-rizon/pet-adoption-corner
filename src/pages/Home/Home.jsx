@@ -1,8 +1,8 @@
 
-import { Banner } from './Banner'
+
 
 import FavoriteBook from './FavoriteBook'
-
+import Bannertext from "./Banner"
 
 import PromoBanner from './PromoBanner'
 
@@ -18,17 +18,24 @@ export const Home = () => {
   const uniqueCategories = Array.from(new Set(categories.map(category => category.category)));
   return (
     <div>
-      <Banner/>
- <h2 className="text-4xl my-6 font-bold text-center mt-24">Pet Adopt Category</h2>
-            <div   className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 mx-16 gap-8 my-4 py-10 ml-32 text-center '>
+    <Bannertext></Bannertext>
+    <section className="py-2 bg-gray-50">
+      <div className="container mx-auto px-2">
+        <h2 className="text-2xl font-bold text-center text-gray-800 mb-12">
+          Pet Adoption Categories
+        </h2>
+            <div   className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-6'>
             {
               uniqueCategories.map((category, index)=> 
           <CategoryCard key={index} category={category} />
         )
         }
+       
 
    
 </div>
+ </div>
+ </section>
 
       <Business></Business>
       

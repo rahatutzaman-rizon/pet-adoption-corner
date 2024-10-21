@@ -10,13 +10,19 @@ function App() {
 
   const {user} = useContext(AuthContext)
   return (
-    <>
-      <Navbar/>
-      <div className='min-h-screen'>
+    <div>
+
+<div className=''>
+    <Navbar/>
+    </div>
+     
+      <div className='min-h-screen '>
       <Outlet/>
       </div>
       <FooterMain/>
-    </>
+    </div>
+    
+   
   )
 }
 

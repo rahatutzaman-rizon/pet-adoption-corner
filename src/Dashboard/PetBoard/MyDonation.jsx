@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   FaDog, FaDollarSign, FaExchangeAlt, FaPhoneAlt, FaUndo, 
-  FaPiggyBank, FaHandHoldingHeart, FaChartLine, FaUsers, FaPaw 
+  FaPiggyBank,FaChartLine, FaUsers, FaPaw 
 } from "react-icons/fa";
 import { IoMdInformationCircleOutline } from "react-icons/io";
 
