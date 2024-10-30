@@ -1,153 +1,199 @@
-import { useContext, useEffect, useState } from "react";
-import { FaDove, FaBars, FaTimes } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
-import sun from "./light.png";
-import moon from "./dark.png";
+import  { useContext, useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthProvider";
+import { 
+  FaDove, 
+  FaUserCircle, 
+  FaShoppingCart, 
+  FaPaw, 
+  FaHome,
+  FaStore,
+  FaHandHoldingHeart,
+  FaSignInAlt,
+  FaChartLine
+} from "react-icons/fa";
+import { HiMenu, HiX } from "react-icons/hi";
+import { BsSunFill, BsMoonFill } from "react-icons/bs";
 
 const Navbar = () => {
-    const { user, logOut } = useContext(AuthContext);
-    const [isSticky, setIsSticky] = useState(false);
-    const [theme, setTheme] = useState(
-        localStorage.getItem("theme") ? localStorage.getItem("theme") : "light"
-    );
-    const [isOpen, setIsOpen] = useState(false);
+  const { user, logOut } = useContext(AuthContext);
+  const [isSticky, setIsSticky] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [theme, setTheme] = useState(
+    localStorage.getItem("theme") ? localStorage.getItem("theme") : "light"
+  );
+  const location = useLocation();
 
-    const handleToggle = (e) => {
-        if (e.target.checked) {
-            setTheme("dark");
-        } else {
-            setTheme("light");
-        }
+  const navItems = [
+    { link: "Home", path: "/", icon: <FaHome className="w-4 h-4" /> },
+    { link: "Shop", path: "/shop", icon: <FaStore className="w-4 h-4" /> },
+    { link: "Donation", path: "/donation-campign", icon: <FaHandHoldingHeart className="w-4 h-4" /> },
+    { link: "Pets", path: "/petlisting", icon: <FaPaw className="w-4 h-4" /> },
+    { link: "Login", path: "/login", icon: <FaSignInAlt className="w-4 h-4" /> },
+    { link: "Dashboard", path: "/admin/dashboard", icon: <FaChartLine className="w-4 h-4" /> },
+  ];
+
+  const handleToggle = (e) => {
+    setTheme(e.target.checked ? "dark" : "light");
+  };
+
+  const handleLogout = () => {
+    logOut().then();
+    setIsOpen(false);
+  };
+
+  useEffect(() => {
+    localStorage.setItem("theme", theme);
+    document.querySelector("html").setAttribute("data-theme", theme);
+  }, [theme]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsSticky(window.scrollY > 100);
     };
 
-    useEffect(() => {
-        localStorage.setItem("theme", theme);
-        const localTheme = localStorage.getItem("theme");
-        document.querySelector("html").setAttribute("data-theme", localTheme);
-    }, [theme]);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-    const handleLogout = () => {
-        logOut().then();
-    };
+  return (
+    <header className={`fixed w-full top-0 left-0 right-0 transition-all duration-300 z-50 
+      ${isSticky ? "bg-white shadow-lg" : " backdrop-blur-sm bg-white/80"}`}>
+      <nav className="container mx-auto px-4 py-4">
+        <div className="flex items-center justify-between">
+          {/* Logo */}
+          <Link to="/" className="flex items-center space-x-2">
+            <FaDove className="w-8 h-8 text-primary-600" />
+            <span className="text-2xl font-bold bg-primary-600 bg-clip-text text-transparent">
+              Pet Corner
+            </span>
+          </Link>
 
-    useEffect(() => {
-        const handleScroll = () => {
-            if (window.scrollY > 100) {
-                setIsSticky(true);
-            } else {
-                setIsSticky(false);
-            }
-        };
-
-        window.addEventListener("scroll", handleScroll);
-
-        return () => {
-            window.removeEventListener("scroll", handleScroll);
-        };
-    }, []);
-
-    const navItems = [
-        { link: "Home", path: "/" },
-        { link: "Shop", path: "/shop" },
-        { link: "Donation", path: "/donation-campign" },
-        { link: "Pets", path: "/petlisting" },
-        { link: "Login", path: "/login" },
-        { link: "Dashboard", path: "/admin/dashboard" },
-    ];
-
-    return (
-        <motion.header
-            initial={{ opacity: 0, y: -50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="w-full bg-transparent bg-sky-700 fixed top-0 left-0 right-0 transition-all ease-in duration-300"
-        >
-            <nav className={`py-4 px-4 ${isSticky ? "sticky top-0 left-0 right-0 bg-white shadow-lg" : ""}`}>
-                <div className="flex justify-between items-center text-black gap-2">
-                    <motion.div whileHover={{ scale: 1.05 }}>
-                        <Link to="/" className="text-3xl font-bold text-pink-700 flex items-center">
-                            <FaDove className="inline-block mr-2" />Pet Corner
-                        </Link>
-                    </motion.div>
-
-                    <motion.button
-                        whileTap={{ scale: 0.95 }}
-                        className="btn btn-square btn-ghost md:hidden"
-                        onClick={() => setIsOpen(!isOpen)}
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-8">
+            <ul className="flex space-x-6">
+              {navItems.map(({ link, path, icon }) => (
+                (!user && link === "Dashboard") ? null : (
+                  <li key={link}>
+                    <Link
+                      to={path}
+                      className={`flex items-center space-x-1 px-2 py-1 rounded-lg transition-colors duration-200
+                        ${location.pathname === path 
+                          ? "text-blue-600 font-medium" 
+                          : "text-gray-600 hover:text-blue-600"}`}
                     >
-                        {isOpen ? <FaTimes className="text-2xl" /> : <FaBars className="text-2xl" />}
-                    </motion.button>
+                      {icon}
+                      <span>{link}</span>
+                    </Link>
+                  </li>
+                )
+              ))}
+            </ul>
 
-                    <ul className={`md:flex space-x-2 hidden navitems ${isOpen ? 'block' : 'hidden'}`}>
-                        {navItems.map(({ link, path }) => (
-                            <motion.li key={link} whileHover={{ scale: 1.1 }}>
-                                <Link to={path} className="block font-bold text-base cursor-pointer  uppercase text-black hover:text-blue-700">
-                                    {link}
-                                </Link>
-                            </motion.li>
-                        ))}
-                    </ul>
+            {/* Theme Toggle */}
+            <div className="flex items-center">
+              <div className="relative inline-block w-12 h-6 transition duration-200 ease-in-out">
+                <input
+                  type="checkbox"
+                  className="hidden"
+                  onChange={handleToggle}
+                  checked={theme === "dark"}
+                  id="theme-toggle"
+                />
+                <label
+                  htmlFor="theme-toggle"
+                  className={`absolute cursor-pointer w-12 h-6 rounded-full transition-colors duration-300
+                    ${theme === "dark" ? "bg-gray-700" : "bg-blue-100"}`}
+                >
+                  <div className={`absolute w-6 h-6 rounded-full transition-transform duration-300 flex items-center justify-center
+                    ${theme === "dark" 
+                      ? "transform translate-x-6 bg-gray-900" 
+                      : "bg-blue-500"}`}
+                  >
+                    {theme === "dark" 
+                      ? <BsMoonFill className="w-3 h-3 text-white" />
+                      : <BsSunFill className="w-3 h-3 text-white" />
+                    }
+                  </div>
+                </label>
+              </div>
+            </div>
 
-                    {user && (
-                        <motion.button
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            onClick={handleLogout}
-                            className="btn btn-info rounded-full hidden md:block"
-                        >
-                            Logout
-                        </motion.button>
-                    )}
+            {/* User Menu */}
+            {user && (
+              <div className="flex items-center space-x-4">
+                <button
+                  onClick={handleLogout}
+                  className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors duration-200"
+                >
+                  Logout
+                </button>
+                <Link to="/admin/dashboard">
+                  {user.photoURL ? (
+                    <img 
+                      src={user.photoURL} 
+                      alt="Profile" 
+                      className="w-8 h-8 rounded-full ring-2 ring-blue-600 ring-offset-2"
+                    />
+                  ) : (
+                    <FaUserCircle className="w-8 h-8 text-gray-600" />
+                  )}
+                </Link>
+              </div>
+            )}
+          </div>
 
-                    {user && (
-                        <motion.div whileHover={{ scale: 1.1 }} className="hidden md:block">
-                            <Link to="/admin/dashboard">
-                                <img className="rounded-full h-8" src={user?.photoURL} alt="" />
-                            </Link>
-                        </motion.div>
-                    )}
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200"
+          >
+            {isOpen ? (
+              <HiX className="w-6 h-6 text-gray-600" />
+            ) : (
+              <HiMenu className="w-6 h-6 text-gray-600" />
+            )}
+          </button>
+        </div>
 
-                    <motion.button
-                        whileTap={{ scale: 0.95 }}
-                        className="btn btn-square btn-ghost hidden md:block"
+        {/* Mobile Menu */}
+        {isOpen && (
+          <div className="md:hidden mt-4 py-4 bg-white rounded-lg shadow-xl">
+            <ul className="space-y-2 px-4">
+              {navItems.map(({ link, path, icon }) => (
+                (!user && link === "Dashboard") ? null : (
+                  <li key={link}>
+                    <Link
+                      to={path}
+                      onClick={() => setIsOpen(false)}
+                      className={`flex items-center space-x-2 p-2 rounded-lg transition-colors duration-200
+                        ${location.pathname === path
+                          ? "text-blue-600 bg-blue-50 font-medium"
+                          : "text-gray-600 hover:bg-gray-50 hover:text-blue-600"}`}
                     >
-                        <label className="swap swap-rotate w-12 h-12">
-                            <input
-                                type="checkbox"
-                                onChange={handleToggle}
-                                checked={theme === "light" ? false : true}
-                            />
-                            <img src={sun} alt="light" className="w-8 h-8 swap-on" />
-                            <img src={moon} alt="dark" className="w-8 h-8 swap-off" />
-                        </label>
-                    </motion.button>
-                </div>
-
-                {isOpen && (
-                    <div className="md:hidden mt-4 bg-sky-800">
-                        <ul className="space-y-4">
-                            {navItems.map(({ link, path }) => (
-                                <motion.li key={link} whileHover={{ scale: 1.1 }}>
-                                    <Link to={path} className="block font-bold text-base cursor-pointer uppercase  mx-8 text-white hover:text-sky-400">
-                                        {link}
-                                    </Link>
-                                </motion.li>
-                            ))}
-                            {user && (
-                                <motion.li whileHover={{ scale: 1.1 }}>
-                                    <button onClick={handleLogout} className="block font-bold text-base cursor-pointer uppercase  mx-8 text-white hover:text-sky-400">
-                                        Logout
-                                    </button>
-                                </motion.li>
-                            )}
-                        </ul>
-                    </div>
-                )}
-            </nav>
-        </motion.header>
-    );
+                      {icon}
+                      <span>{link}</span>
+                    </Link>
+                  </li>
+                )
+              ))}
+              {user && (
+                <li>
+                  <button
+                    onClick={handleLogout}
+                    className="w-full flex items-center space-x-2 p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors duration-200"
+                  >
+                    <FaSignInAlt className="w-4 h-4" />
+                    <span>Logout</span>
+                  </button>
+                </li>
+              )}
+            </ul>
+          </div>
+        )}
+      </nav>
+    </header>
+  );
 };
 
 export default Navbar;
