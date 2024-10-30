@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { useLoaderData, useNavigate, Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { motion } from 'framer-motion';
