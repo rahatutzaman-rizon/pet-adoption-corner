@@ -3,7 +3,7 @@ import FavoriteBook from './FavoriteBook';
 import Bannertext from './Banner';
 import { useLoaderData } from 'react-router-dom';
 import CategoryCard from './CategoryCard';
-import About from '../about/About';
+
 import Ourabout from '../about/Ourabout';
 import Business from './Business';
 import { FaPhoneAlt } from 'react-icons/fa';  // Call icon
