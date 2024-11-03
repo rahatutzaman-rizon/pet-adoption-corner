@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import  { useState, useEffect, useContext } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
 import Swal from 'sweetalert2';
@@ -15,6 +15,7 @@ import {
   FaGlobe,
 } from 'react-icons/fa';
 import { AuthContext } from '../../contexts/AuthProvider';
+import Loading from '../Home/Loading';
 
 // Main Pet Food Page Component
 const PetFoodPage = () => {
@@ -69,12 +70,8 @@ const PetFoodPage = () => {
   // Loading Spinner
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-screen bg-gray-100">
-        <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-          className="w-12 h-12 border-t-4 border-primary-500 border-solid rounded-full"
-        />
+      <div>
+        <Loading></Loading>
       </div>
     );
   }

@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import PetListingCard from './PetListingCard';
@@ -38,11 +37,11 @@ const PetListing = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="min-h-screen bg-gradient-to-b from-blue-50 to-indigo-100 py-6 mt-24"
+      className="min-h-screen bg-gradient-to-b from-primary-50 to-primary-100 py-6 mt-24"
     >
       <div className="container mx-auto px-4">
         <motion.h1 
-          className="text-4xl font-bold text-center text-indigo-800 mb-8"
+          className="text-4xl font-extrabold text-center text-primary-600 mb-8"
           initial={{ y: -50 }}
           animate={{ y: 0 }}
           transition={{ delay: 0.2, type: 'spring' }}
@@ -51,7 +50,7 @@ const PetListing = () => {
         </motion.h1>
 
         <motion.div 
-          className="bg-white rounded-lg shadow-md p-6 mb-8"
+          className="bg-white rounded-lg shadow-lg p-6 mb-8"
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.3, duration: 0.5 }}
@@ -62,7 +61,7 @@ const PetListing = () => {
               <input
                 type="text"
                 placeholder="Search pets by name"
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -70,7 +69,7 @@ const PetListing = () => {
             <div className="relative">
               <FaFilter className="absolute left-3 top-3 text-gray-400" />
               <select
-                className="pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 appearance-none bg-white"
+                className="pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 appearance-none bg-white"
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
               >
@@ -111,8 +110,8 @@ const PetListing = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
-            <FaPaw className="inline-block text-4xl text-indigo-600 animate-bounce" />
-            <span className="block mt-2 text-xl text-indigo-800">Loading more pets...</span>
+            <FaPaw className="inline-block text-4xl text-primary-600 animate-bounce" />
+            <span className="block mt-2 text-xl text-primary-800">Loading more pets...</span>
           </motion.div>
         )}
       </div>

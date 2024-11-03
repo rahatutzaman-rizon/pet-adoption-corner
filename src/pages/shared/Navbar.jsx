@@ -27,7 +27,7 @@ const Navbar = () => {
   const navItems = [
     { link: "Home", path: "/", icon: <FaHome className="w-4 h-4" /> },
     { link: "Shop", path: "/shop", icon: <FaStore className="w-4 h-4" /> },
-    { link: "Donation", path: "/donation-campign", icon: <FaHandHoldingHeart className="w-4 h-4" /> },
+    { link: "Donation", path: "/donation-list", icon: <FaHandHoldingHeart className="w-4 h-4" /> },
     { link: "Pets", path: "/petlisting", icon: <FaPaw className="w-4 h-4" /> },
     { link: "Login", path: "/login", icon: <FaSignInAlt className="w-4 h-4" /> },
     { link: "Dashboard", path: "/admin/dashboard", icon: <FaChartLine className="w-4 h-4" /> },

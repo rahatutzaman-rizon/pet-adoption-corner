@@ -59,7 +59,7 @@ const CampaignList = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 mt-16">
       {/* Hero Section */}
       <div className="bg-gradient-to-r from-primary-600 to-primary-700 text-white">
         <div className="container mx-auto px-4 py-16">

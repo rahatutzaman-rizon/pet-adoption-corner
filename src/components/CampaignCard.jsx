@@ -44,7 +44,7 @@ const CampaignCard = ({ campaign }) => {
     <div className="w-full max-w-md mx-auto bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-200">
       <div className="relative">
         <img
-          src={imageUrl}
+          src="https://i.ibb.co.com/c1WsSXd/donate.jpg"
           alt={title}
           className="w-full h-48 object-cover"
         />
