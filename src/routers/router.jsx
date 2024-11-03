@@ -38,6 +38,10 @@ import AllPets from "../Dashboard/PetBoard/Admin/AllPets";
 import PetFoodPage from "../pages/Shop/Product";
 import OrderTable from "../pages/Shop/Order";
 import CampaignsPage from "../components/CampaignList";
+import Payment from "../components/Payment";
+import Success from "../components/Success";
+import Cancel from "../components/Cancel";
+
 
 
 
@@ -81,7 +85,24 @@ const router = createBrowserRouter([
       }
 ,
 
+{
+  path:"/donation-list/:id",
+  element:<Payment></Payment>
 
+ },
+
+ {
+  path:"/success",
+  element:<Success></Success>
+
+ },
+{
+  path:"cancel",
+  element:<Cancel></Cancel> 
+
+
+}
+,
 
       {
         path:"/shop",

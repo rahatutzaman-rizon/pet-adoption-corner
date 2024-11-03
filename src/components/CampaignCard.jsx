@@ -97,7 +97,7 @@ const CampaignCard = ({ campaign }) => {
         </div>
 
         <Link 
-          to={`/donate/${_id}`}
+          to={`/donation-list/${_id}`}
           className="block w-full text-center px-6 py-3 bg-primary-600 text-white font-medium rounded-lg hover:bg-primary-700 transition-colors duration-300"
         >
           Donate Now

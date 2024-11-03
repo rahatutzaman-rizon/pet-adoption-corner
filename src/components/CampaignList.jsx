@@ -25,7 +25,7 @@ const CampaignList = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch('http://localhost:5000/donation-campaign')
+    fetch('https://pet-adoption-corner-server.vercel.app/donation')
       .then((res) => {
         if (!res.ok) throw new Error('Failed to fetch campaigns');
         return res.json();
