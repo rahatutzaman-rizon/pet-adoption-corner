@@ -45,27 +45,54 @@ const PetFoodPage = () => {
     fetchPetFoods();
   }, []);
 
-  // Add to Cart Handler
+  // Add headers to your axios request
   const addToCart = async (food, quantity, email, phone, client) => {
-    const orderDetails = { ...food, quantity, email, phone, client };
+    // Create a new order details object without the _id field
+    const { _id, ...foodWithoutId } = food;  // Destructure to remove _id
+    
+    const orderDetails = {
+        foodId: _id,  // Store the original food _id separately
+        ...foodWithoutId,
+        quantity,
+        email,
+        phone,
+        client,
+        orderDate: new Date(),
+        status: 'pending'
+    };
+    
+    console.log('Sending order details:', orderDetails);
+
     try {
-      await axios.post('https://assignment-12-server-two-smoky.vercel.app/order', orderDetails);
-      setCartItems([...cartItems, orderDetails]);
-      setSelectedFood(null);
-      Swal.fire({
-        icon: 'success',
-        title: 'Purchase Successful!',
-        text: 'Your order has been placed successfully. We will contact you soon to arrange delivery.',
-      });
+        const response = await axios.post(
+            'http://localhost:5000/order',
+            orderDetails,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }
+        );
+
+        if (response.data.success) {
+            setCartItems(prevItems => [...prevItems, orderDetails]);
+            setSelectedFood(null);
+            Swal.fire({
+                icon: 'success',
+                title: 'Purchase Successful!',
+                text: 'Your order has been placed successfully. We will contact you soon to arrange delivery.',
+            });
+        }
     } catch (error) {
-      console.error('Error submitting order:', error);
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Something went wrong! Please try again.',
-      });
+        console.error('Error details:', error.response?.data || error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: error.response?.data?.message || 'Something went wrong! Please try again.',
+        });
     }
-  };
+};
+
 
   // Loading Spinner
   if (loading) {

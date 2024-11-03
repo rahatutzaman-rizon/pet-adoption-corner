@@ -96,6 +96,20 @@ const router = createBrowserRouter([
   element:<Success></Success>
 
  },
+ {
+  path: "/moredetail/:id",
+  element:<Moredetails></Moredetails>,
+  loader:({params})=> fetch(`https://assignment-12-server-two-smoky.vercel.app/moredetail/${params.id}`)  
+},
+{
+  path: "/moredetail2/:id",
+  element:<Moredetail2></Moredetail2>,
+  loader:({params})=> fetch(`https://assignment-12-server-two-smoky.vercel.app/moredetail2/${params.id}`)  
+},
+
+
+
+
 {
   path:"cancel",
   element:<Cancel></Cancel> 
@@ -162,16 +176,7 @@ loader: () => fetch("https://assignment-12-server-two-smoky.vercel.app/pet-listi
     ],
   },
   
-  {
-    path: "/moredetail/:id",
-    element:<Moredetails></Moredetails>,
-    loader:({params})=> fetch(`https://assignment-12-server-two-smoky.vercel.app/moredetail/${params.id}`)  
-  },
-  {
-    path: "/moredetail2/:id",
-    element:<Moredetail2></Moredetail2>,
-    loader:({params})=> fetch(`https://assignment-12-server-two-smoky.vercel.app/moredetail2/${params.id}`)  
-  },
+  
 
   {
     path: "login",

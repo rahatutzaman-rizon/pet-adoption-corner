@@ -1,107 +1,153 @@
-import React from 'react';
-import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn, FaPaw } from 'react-icons/fa';
+
 
 const FooterMain = () => {
+  const currentYear = new Date().getFullYear();
+
   return (
-    <footer className="bg-gray-900 text-white pt-12 pb-8">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {/* About Us Section */}
-          <div>
-            <h3 className="text-2xl font-bold mb-4 flex items-center">
-              <FaPaw className="mr-2 text-yellow-400" /> Pet Corner
-            </h3>
-            <p className="text-gray-400 mb-4">
-              Dedicated to finding loving homes for pets in need. Join us in making a difference in animals' lives.
+    <footer className="bg-gradient-to-b from-gray-900 to-black text-gray-300">
+      {/* Main Footer Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+          {/* Brand Section */}
+          <div className="space-y-6">
+            <div className="flex items-center space-x-2">
+              <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
+                <span className="text-white text-2xl font-bold">PC</span>
+              </div>
+              <span className="text-2xl font-bold bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
+                Pet Corner
+              </span>
+            </div>
+            <p className="text-sm text-gray-400 leading-relaxed">
+              We're on a mission to build the best platform for modern businesses. 
+              Join us in shaping the future of digital experiences.
             </p>
             <div className="flex space-x-4">
-              <SocialIcon icon={<FaFacebookF />} href="https://facebook.com" />
-              <SocialIcon icon={<FaTwitter />} href="https://twitter.com" />
-              <SocialIcon icon={<FaInstagram />} href="https://instagram.com" />
-              <SocialIcon icon={<FaLinkedinIn />} href="https://linkedin.com" />
+              {socialLinks.map((link) => (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center 
+                           hover:bg-gray-700 transition-colors duration-300"
+                >
+                  {link.icon}
+                </a>
+              ))}
             </div>
           </div>
 
-          {/* Quick Links Section */}
+          {/* Product Section */}
           <div>
-            <h4 className="text-xl font-semibold mb-4">Quick Links</h4>
-            <ul className="space-y-2">
-              <FooterLink href="/about" text="About Us" />
-              <FooterLink href="/services" text="Our Services" />
-              <FooterLink href="/adopt" text="Adopt a Pet" />
-              <FooterLink href="/donate" text="Donate" />
-              <FooterLink href="/volunteer" text="Volunteer" />
+            <h3 className="text-lg font-semibold mb-6">Product</h3>
+            <ul className="space-y-4">
+              {productLinks.map((link) => (
+                <li key={link.name}>
+                  <a
+                    href={link.href}
+                    className="text-gray-400 hover:text-purple-400 transition-colors duration-300"
+                  >
+                    {link.name}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Contact Information Section */}
+          {/* Company Section */}
           <div>
-            <h4 className="text-xl font-semibold mb-4">Contact Us</h4>
-            <ul className="space-y-2">
-              <ContactItem icon={<FaPhone />} text="01771276400" />
-              <ContactItem icon={<FaEnvelope />} text="rizonraha199@gmail.com" />
-              <ContactItem icon={<FaMapMarkerAlt />} text="Gulshan Road-3, House: 1223, Dhaka" />
+            <h3 className="text-lg font-semibold mb-6">Company</h3>
+            <ul className="space-y-4">
+              {companyLinks.map((link) => (
+                <li key={link.name}>
+                  <a
+                    href={link.href}
+                    className="text-gray-400 hover:text-purple-400 transition-colors duration-300"
+                  >
+                    {link.name}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
 
           {/* Newsletter Section */}
-          {/* <div>
-            <h4 className="text-xl font-semibold mb-4">Stay Updated</h4>
-            <p className="text-gray-400 mb-4">Subscribe to our newsletter for pet care tips and adoption updates.</p>
-            <form className="flex flex-col sm:flex-row">
-              <input 
-                type="email" 
-                placeholder="Enter your email" 
-                className="bg-gray-800 text-white px-4 py-2 rounded-l-md focus:outline-none focus:ring-2 focus:ring-yellow-400 mb-2 sm:mb-0"
-              />
-              <button 
-                type="submit" 
-                className="bg-yellow-400 text-gray-900 px-4 py-2 rounded-r-md hover:bg-yellow-300 transition duration-300 ease-in-out"
+          <div>
+            <h3 className="text-lg font-semibold mb-6">Stay Updated</h3>
+            <p className="text-sm text-gray-400 mb-4">
+              Subscribe to our newsletter for the latest updates and offers.
+            </p>
+            <form className="space-y-3">
+              <div className="relative">
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  className="w-full px-4 py-3 bg-gray-800 rounded-lg focus:outline-none focus:ring-2 
+                           focus:ring-purple-500 text-gray-300 placeholder-gray-500"
+                />
+              </div>
+              <button
+                type="submit"
+                className="w-full px-4 py-3 bg-primary-600 text-white 
+                         rounded-lg font-medium hover:opacity-90 transition-opacity duration-300"
               >
                 Subscribe
               </button>
             </form>
-          </div> */}
+          </div>
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-gray-800 mt-8 pt-8 text-center">
-          <p className="text-gray-400">
-            © {new Date().getFullYear()} Pet Corner by Rahatutzaman Rizon. All rights reserved.
-          </p>
+        <div className="mt-16 pt-8 border-t border-gray-800">
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+            <p className="text-sm text-gray-400">
+              © {currentYear} Brand. All rights reserved.
+            </p>
+            <div className="flex space-x-6">
+              {legalLinks.map((link) => (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  className="text-sm text-gray-400 hover:text-purple-400 transition-colors duration-300"
+                >
+                  {link.name}
+                </a>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </footer>
   );
 };
 
-const SocialIcon = ({ icon, href }) => (
-  <a 
-    href={href} 
-    target="_blank" 
-    rel="noopener noreferrer" 
-    className="bg-gray-800 p-2 rounded-full hover:bg-yellow-400 hover:text-gray-900 transition duration-300 ease-in-out"
-  >
-    {icon}
-  </a>
-);
+// Data
+const socialLinks = [
+  { name: 'Twitter', href: '#', icon: 'X' },
+  { name: 'LinkedIn', href: '#', icon: 'In' },
+  { name: 'GitHub', href: '#', icon: 'Git' },
+  { name: 'Discord', href: '#', icon: 'D' }
+];
 
-const FooterLink = ({ href, text }) => (
-  <li>
-    <a 
-      href={href} 
-      className="text-gray-400 hover:text-yellow-400 transition duration-300 ease-in-out"
-    >
-      {text}
-    </a>
-  </li>
-);
+const productLinks = [
+  { name: 'Features', href: '#' },
+  { name: 'Solutions', href: '#' },
+  { name: 'Pricing', href: '#' },
+  { name: 'Tutorials', href: '#' },
+  { name: 'Documentation', href: '#' }
+];
 
-const ContactItem = ({ icon, text }) => (
-  <li className="flex items-center text-gray-400">
-    <span className="mr-2 text-yellow-400">{icon}</span>
-    {text}
-  </li>
-);
+const companyLinks = [
+  { name: 'About Us', href: '#' },
+  { name: 'Blog', href: '#' },
+  { name: 'Careers', href: '#' },
+  { name: 'Press', href: '#' },
+  { name: 'Partners', href: '#' }
+];
+
+const legalLinks = [
+  { name: 'Privacy Policy', href: '#' },
+  { name: 'Terms of Service', href: '#' },
+  { name: 'Cookie Policy', href: '#' }
+];
 
 export default FooterMain;
