@@ -30,6 +30,7 @@ const Sidebar = ({ closeSidebar }) => {
 
   const navItems = [
     { name: 'Dashboard', icon: <FaChartBar />, href: '/admin/dashboard' },
+    { name: 'PetListing', icon: <FaPaw />, href: '/admin/dashboard/petlisting' },
     { name: 'My Donations', icon: <FaHeart />, href: '/admin/dashboard/mydonation' },
     { name: 'Donation Campaigns', icon: <FaDonate />, href: '/admin/dashboard/donation-campaign' },
     { name: 'Create Campaign', icon: <FaPlus />, href: '/admin/dashboard/create-donation-campaign' },

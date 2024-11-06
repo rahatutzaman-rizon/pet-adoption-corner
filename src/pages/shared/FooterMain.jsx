@@ -19,7 +19,7 @@ const FooterMain = () => {
               </span>
             </div>
             <p className="text-sm text-gray-400 leading-relaxed">
-              We're on a mission to build the best platform for modern businesses. 
+              We are on a mission to build the best platform for modern businesses. 
               Join us in shaping the future of digital experiences.
             </p>
             <div className="flex space-x-4">

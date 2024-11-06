@@ -8,8 +8,8 @@ import Login from "../pages/Login";
 
 
 import Dashboard from "../Dashboard/Dashboard";
-import ManageBooks from "../Dashboard/ManageBooks";
-//import EditBooks from "../Dashboard/EditBooks";
+
+
 import Signup from "../pages/Signup";
 import Logout from "../pages/Logout";
 import ErrorPage from "../pages/shared/ErrorPage";
@@ -41,6 +41,7 @@ import CampaignsPage from "../components/CampaignList";
 import Payment from "../components/Payment";
 import Success from "../components/Success";
 import Cancel from "../components/Cancel";
+import PetList from "../Dashboard/PetBoard/PetList";
 
 
 
@@ -136,7 +137,7 @@ const router = createBrowserRouter([
       { path: "/admin/dashboard/mydonation", element: <MyDonation></MyDonation> ,
       loader:()=> fetch('https://assignment-12-server-two-smoky.vercel.app/donation-detail'),
     },
-      { path: "/admin/dashboard/manage", element: <ManageBooks /> },
+      
       
       { path: "/admin/dashboard/add-pet", element: <AddPet></AddPet> },
 
@@ -169,7 +170,14 @@ const router = createBrowserRouter([
 
  { path: "/admin/dashboard/alldonations", element: <AllDonations></AllDonations>,
 loader: () => fetch("https://assignment-12-server-two-smoky.vercel.app/adopt")
-},  { path: "/admin/dashboard/allpets", element: <AllPets></AllPets>,
+},
+
+{ path: "/admin/dashboard/petlisting", element: <PetList></PetList>
+ 
+  },
+
+
+{ path: "/admin/dashboard/allpets", element: <AllPets></AllPets>,
 loader: () => fetch("https://assignment-12-server-two-smoky.vercel.app/pet-listing"),
 },
     
