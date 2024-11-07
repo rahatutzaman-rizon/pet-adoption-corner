@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+
 import SideBar from './SideBar';
 import Navbar from '../pages/shared/Navbar';
 
@@ -12,9 +13,9 @@ export const DashboardLayout = () => {
     const handleResize = () => {
       setIsSmallScreen(window.innerWidth < 1024);
       if (window.innerWidth >= 1024) {
-        setIsSidebarOpen(true);
+        setIsSidebarOpen(true);  // Always show sidebar on larger screens
       } else {
-        setIsSidebarOpen(false);
+        setIsSidebarOpen(false);  // Hide sidebar on smaller screens
       }
     };
 
@@ -37,8 +38,8 @@ export const DashboardLayout = () => {
               exit={isSmallScreen ? { x: "-100%" } : { x: 0 }}
               transition={{ duration: 0.3 }}
               className={`${
-                isSmallScreen ? "fixed inset-y-0 left-0 z-30" : "relative"
-              } w-64 bg-white shadow-lg`}
+                isSmallScreen ? "fixed inset-y-0 left-0 z-30 mt-8" : "relative"
+              }  bg-white shadow-lg mt-8`}
             >
               <SideBar 
                 closeSidebar={() => isSmallScreen && setIsSidebarOpen(false)} 
@@ -48,7 +49,7 @@ export const DashboardLayout = () => {
           )}
         </AnimatePresence>
 
-        <div className="flex-1 flex flex-col overflow-hidden">
+        <div className="flex-1 flex flex-col overflow-hidden mx-4 sm:mx-6 lg:mx-12">
           <header className="bg-white shadow-sm z-20 lg:hidden">
             <div className="flex-shrink-0 px-4 py-2 flex items-center justify-between">
               <motion.button
@@ -61,7 +62,7 @@ export const DashboardLayout = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
               </motion.button>
-              <h1 className="text-xl font-semibold text-gray-800">Dashboard</h1>
+              <h1 className="text-xl font-semibold text-gray-800">Total Dashboard</h1>
             </div>
           </header>
 
@@ -70,7 +71,8 @@ export const DashboardLayout = () => {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
+                exit={{ opacity: 0, y: 20 }}
+                transition={{ duration: 0.3 }}
               >
                 <Outlet />
               </motion.div>
@@ -78,13 +80,6 @@ export const DashboardLayout = () => {
           </main>
         </div>
       </div>
-
-      {isSmallScreen && isSidebarOpen && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-20"
-          onClick={() => setIsSidebarOpen(false)}
-        />
-      )}
     </div>
   );
 };

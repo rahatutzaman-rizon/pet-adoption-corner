@@ -29,7 +29,6 @@ import AdmitPet from "../Pet/AdmitPet";
 import DonationCampign from "../Pet/DonationCampign";
 import Moredetail2 from "../pages/Home/Specific/Moredetail2";
 
-import UpdatePage from "../Dashboard/PetBoard/UpdatePage";
 import MyDonationCampaign from "../Dashboard/PetBoard/MyDonationCampaign";
 import AdoptionRequest from "../Dashboard/PetBoard/AdoptionRequest";
 import Users from "../Dashboard/PetBoard/Admin/Users";
@@ -140,17 +139,17 @@ const router = createBrowserRouter([
     children: [
       { path: "/admin/dashboard", element: <Dashboard></Dashboard>},
       { path: "/admin/dashboard/mydonation", element: <MyDonation></MyDonation> ,
-      loader:()=> fetch('https://assignment-12-server-two-smoky.vercel.app/donation-detail'),
-    },
-      
-      
+      loader:()=> fetch('https://assignment-12-server-two-smoky.vercel.app/donation-detail'),},
       { path: "/admin/dashboard/add-pet", element: <AddPet></AddPet> },
       { path: "/admin/dashboard/adoption-list", element: <PetAdoptionTable></PetAdoptionTable> },
       { path: "/admin/dashboard/donation-list", element: <CampaignsTable></CampaignsTable> },
       { path: "/admin/dashboard/shop", element: <ShopList></ShopList> },
       { path: "/admin/dashboard/payment", element: <PaymentList></PaymentList> },
 
-
+      { path: "/admin/dashboard/alldonations", element: <AllDonations></AllDonations>,
+        loader: () => fetch("https://assignment-12-server-two-smoky.vercel.app/adopt")
+        },
+        
       { path: "/admin/dashboard/my-pet", element: <MyPet></MyPet>,
       loader:()=> fetch('https://assignment-12-server-two-smoky.vercel.app/add-pet'), },
       { path: "/admin/dashboard/adoption", element: <AdoptionRequest></AdoptionRequest> ,
@@ -161,12 +160,7 @@ const router = createBrowserRouter([
     },
       { path: "/admin/dashboard/create-donation-campaign", element:<CreateDonationsCampign></CreateDonationsCampign> },
      
-       
 
-      
-    { path: "/admin/dashboard/add-pet/:id", element: <UpdatePage></UpdatePage>,
-    loader: ({ params }) => fetch(`https://assignment-12-server-two-smoky.vercel.app/update-pet/${params.id}`)
-  },
 
   { path: "/admin/dashboard/users", element: <Users></Users>,
   loader: () => fetch("https://assignment-12-server-two-smoky.vercel.app/users ")
@@ -178,9 +172,6 @@ const router = createBrowserRouter([
 }, 
 
 
- { path: "/admin/dashboard/alldonations", element: <AllDonations></AllDonations>,
-loader: () => fetch("https://assignment-12-server-two-smoky.vercel.app/adopt")
-},
 
 { path: "/admin/dashboard/petlisting", element: <PetList></PetList>
  

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Modal from 'react-modal';
+import Loading from '../../pages/Home/Loading';
 
 Modal.setAppElement('#root'); // Adjust this if your root element has a different ID
 
@@ -96,7 +97,9 @@ const CampaignsTable = () => {
       <h2 className="text-3xl font-bold text-primary-600 mb-6">Donation Campaigns</h2>
 
       {loading ? (
-        <p className="text-center text-primary-600">Loading campaigns...</p>
+        <p className="text-center text-primary-600">
+          <Loading></Loading>
+        </p>
       ) : (
         <div className="overflow-x-auto">
           <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">

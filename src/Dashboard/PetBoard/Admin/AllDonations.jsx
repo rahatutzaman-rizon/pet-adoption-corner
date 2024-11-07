@@ -1,6 +1,7 @@
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
+import Loading from "../../../pages/Home/Loading";
 
 const AllDonations = () => {
   const allDonation = useLoaderData();
@@ -35,7 +36,7 @@ const AllDonations = () => {
               'Deleted!',
               'The pet donation has been deleted.',
               'success'
-            )
+            );
             const remaining = users.filter(user => user._id !== _id);
             setUsers(remaining);
             navigate('/admin/dashboard/alldonations');
@@ -43,54 +44,60 @@ const AllDonations = () => {
         })
         .catch(error => {
           setIsLoading(false);
+          console.error(error);
           Swal.fire(
             'Error!',
             'There was a problem deleting the donation.',
             'error'
-          )
+          );
         });
       }
-    })
-  }
+    });
+  };
 
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
-        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-500"></div>
+        <div className=" border-t-4 border-b-4 border-primary-600">
+          <Loading></Loading>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6 text-center text-gray-100">All Pet Donations</h1>
+    <div className="container mx-auto px-4 py-2">
+      <div className="mb-2 bg-primary-50 p-6 rounded-lg shadow-lg">
+        <h1 className="text-4xl font-bold mb-2 text-center text-primary-600">All Pet Donations</h1>
+        <p className="text-center text-primary-400">Review and manage all the pet donations here. You can delete any entry as needed.</p>
+      </div>
       {users.length === 0 ? (
-        <p className="text-center text-gray-600">No donations found.</p>
+        <p className="text-center text-gray-600 text-lg">No donations found. Please check back later.</p>
       ) : (
-        <div className="overflow-x-auto shadow-md rounded-lg">
-          <table className="w-full bg-white">
-            <thead className="bg-blue-500 text-white">
+        <div className="overflow-x-auto shadow-lg rounded-lg">
+          <table className="w-full bg-white border-collapse">
+            <thead className="bg-primary-600 text-white">
               <tr>
-                <th className="py-3 px-6 text-left">Donor Name</th>
-                <th className="py-3 px-6 text-left">Donated Pet</th>
-                <th className="py-3 px-6 text-left">User Email</th>
-                <th className="py-3 px-6 text-left">Phone</th>
-                <th className="py-3 px-6 text-left">Location</th>
-                <th className="py-3 px-6 text-left">Actions</th>
+                <th scope="col" className="py-3 px-6 text-left font-semibold">Donor Name</th>
+                <th scope="col" className="py-3 px-6 text-left font-semibold">Donated Pet</th>
+                <th scope="col" className="py-3 px-6 text-left font-semibold">User Email</th>
+                <th scope="col" className="py-3 px-6 text-left font-semibold">Phone</th>
+                <th scope="col" className="py-3 px-6 text-left font-semibold">Location</th>
+                <th scope="col" className="py-3 px-6 text-left font-semibold">Actions</th>
               </tr>
             </thead>
-            <tbody className="text-gray-600">
-              {users.map((campaign, idx) => (
-                <tr key={idx} className="border-b border-gray-200 hover:bg-gray-100">
-                  <td className="py-4 px-6">{campaign.name}</td>
-                  <td className="py-4 px-6">{campaign.petname}</td>
-                  <td className="py-4 px-6">{campaign.email}</td>
-                  <td className="py-4 px-6">{campaign.phone}</td>
-                  <td className="py-4 px-6">{campaign.address}</td>
-                  <td className="py-4 px-6">
+            <tbody>
+              {users.map((user) => (
+                <tr key={user._id} className="border-b even:bg-gray-100 hover:bg-gray-200">
+                  <td className="py-3 px-6">{user.name}</td>
+                  <td className="py-3 px-6">{user.petname}</td>
+                  <td className="py-3 px-6">{user.email}</td>
+                  <td className="py-3 px-6">{user.phone}</td>
+                  <td className="py-3 px-6">{user.address}</td>
+                  <td className="py-3 px-6">
                     <button
-                      onClick={() => handleDelete(campaign._id)}
-                      className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out"
+                      onClick={() => handleDelete(user._id)}
+                      className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-150"
                     >
                       Delete
                     </button>

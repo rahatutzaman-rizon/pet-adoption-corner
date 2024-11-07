@@ -12,6 +12,7 @@ const PetList = () => {
   const [addModalIsOpen, setAddModalIsOpen] = useState(false);
   const [editModalIsOpen, setEditModalIsOpen] = useState(false);
   const [currentPet, setCurrentPet] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetchPets();
@@ -19,8 +20,10 @@ const PetList = () => {
 
   const fetchPets = async () => {
     try {
+      setIsLoading(true);
       const response = await axios.get('https://pet-adoption-corner-server.vercel.app/pet-listing');
       setPets(response.data);
+      setIsLoading(false);
     } catch (error) {
       console.error('Error fetching pets:', error);
       toast.error('Error fetching pets', {
@@ -32,6 +35,7 @@ const PetList = () => {
         draggable: true,
         progress: undefined,
       });
+      setIsLoading(false);
     }
   };
 
@@ -45,7 +49,6 @@ const PetList = () => {
       category: '',
       short_description: '',
       long_description: '',
-     
     });
   };
 
@@ -164,38 +167,49 @@ const PetList = () => {
           <span>Add New Pet</span>
         </button>
       </div>
-      <div className="bg-white rounded-lg shadow-md overflow-hidden">
-        <table className="table-auto w-full">
-          <thead>
-            <tr className="bg-gray-200 text-primary-600">
-              <th className="px-4 py-2">Name</th>
-              <th className="px-4 py-2">Age</th>
-              <th className="px-4 py-2">Location</th>
-              <th className="px-4 py-2">Category</th>
-              <th className="px-4 py-2">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {pets.map((pet) => (
-              <tr key={pet._id} className="text-center border-b border-gray-200 hover:bg-gray-100">
-                <td className="px-4 py-2">{pet.name}</td>
-                <td className="px-4 py-2">{pet.age}</td>
-                <td className="px-4 py-2">{pet.location}</td>
-                <td className="px-4 py-2">{pet.category}</td>
-                <td className="px-4 py-2 flex justify-center space-x-4">
-                  
-                  <button
-                    onClick={() => deletePet(pet._id)}
-                    className="text-red-600 hover:text-red-800"
-                  >
-                    <FaTrash />
-                  </button>
-                </td>
+      {isLoading ? (
+        <div className="flex justify-center items-center h-64">
+          <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-primary-600"></div>
+        </div>
+      ) : (
+        <div className="bg-white rounded-lg shadow-md overflow-hidden">
+          <table className="table-auto w-full">
+            <thead>
+              <tr className="bg-gray-200 text-primary-600">
+                <th className="px-4 py-2">Name</th>
+                <th className="px-4 py-2">Age</th>
+                <th className="px-4 py-2">Location</th>
+                <th className="px-4 py-2">Category</th>
+                <th className="px-4 py-2">Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {pets.map((pet) => (
+                <tr key={pet._id} className="text-center border-b border-gray-200 hover:bg-gray-100">
+                  <td className="px-4 py-2">{pet.name}</td>
+                  <td className="px-4 py-2">{pet.age}</td>
+                  <td className="px-4 py-2">{pet.location}</td>
+                  <td className="px-4 py-2">{pet.category}</td>
+                  <td className="px-4 py-2 flex justify-center space-x-4">
+                    <button
+                      onClick={() => openEditModal(pet)}
+                      className="text-blue-600 hover:text-blue-800"
+                    >
+                      <FaEdit />
+                    </button>
+                    <button
+                      onClick={() => deletePet(pet._id)}
+                      className="text-red-600 hover:text-red-800"
+                    >
+                      <FaTrash />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
 
       {/* Add/Edit Pet Modal */}
       <Modal

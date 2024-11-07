@@ -9,7 +9,7 @@ const PaymentList = () => {
   useEffect(() => {
     const fetchPayments = async () => {
       try {
-        const response = await fetch('http://localhost:5000/paymentlist');
+        const response = await fetch('https://pet-adoption-corner-server.vercel.app/paymentlist');
         const data = await response.json();
         setPayments(data);
         setLoading(false);

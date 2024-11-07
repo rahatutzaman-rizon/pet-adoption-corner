@@ -30,16 +30,18 @@ const Sidebar = ({ closeSidebar }) => {
 
   const navItems = [
     { name: 'Dashboard', icon: <FaChartBar />, href: '/admin/dashboard' },
+    { name: 'Donations History', icon: <FaDonate />, href: '/admin/dashboard/mydonation' },
+    { name: 'Donation List', icon: <FaMoneyBill />, href: '/admin/dashboard/donation-list' },
+    
     { name: 'Pet Listing', icon: <FaPaw />, href: '/admin/dashboard/petlisting' },
     { name: 'Adoption List', icon: <FaList />, href: '/admin/dashboard/adoption-list' },
-    { name: 'Donation List', icon: <FaMoneyBill />, href: '/admin/dashboard/donation-list' },
-    { name: 'My Donations', icon: <FaHeart />, href: '/admin/dashboard/mydonation' },
+    
     { name: 'Shop', icon: <FaShoppingBag />, href: '/admin/dashboard/shop' },
     { name: 'Order', icon: <FaFirstOrderAlt />, href: '/admin/dashboard/order' },
     { name: 'Payment History', icon: <FaPaypal />, href: '/admin/dashboard/payment' },
 
 
-    { name: 'Donation Campaigns', icon: <FaDonate />, href: '/admin/dashboard/donation-campaign' },
+  
   
     { name: 'Users', icon: <FaUserFriends />, href: '/admin/dashboard/users' },
     { name: 'Donations Pet', icon: <FaHeart />, href: '/admin/dashboard/alldonations' },
