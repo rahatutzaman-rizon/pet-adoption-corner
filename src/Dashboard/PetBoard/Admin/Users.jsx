@@ -1,10 +1,10 @@
 import { useLoaderData, useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
+
 import { useState, useEffect } from "react";
 import { FaTrash, FaUserShield, FaSpinner, FaUsers, FaSearch } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 
-const Users = () => {
+const User = () => {
   const allUsers = useLoaderData();
   const navigate = useNavigate();
   const [users, setUsers] = useState(allUsers);
@@ -12,7 +12,7 @@ const Users = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    document.title = "Admin Dashboard | User Management";
+    document.title = "User Management Dashboard";
   }, []);
 
   const handleDeleteUser = async (userId) => {
@@ -30,20 +30,15 @@ const Users = () => {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <motion.div 
-        initial={{ opacity: 0, y: -50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="bg-gradient-to-r from-blue-500 to-purple-600 text-white py-12 px-4 sm:px-6 lg:px-8"
-      >
-        <div className="max-w-7xl mx-auto">
+      <div className="bg-gradient-to-r from-primary-600 to-secondary-600 text-white py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto">
           <motion.h1 
             className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.8 }}
           >
-            User Management
+            User Management Dashboard
           </motion.h1>
           <motion.p 
             className="mt-3 max-w-md text-xl"
@@ -54,21 +49,21 @@ const Users = () => {
             Efficiently manage your user base and control access levels.
           </motion.p>
         </div>
-      </motion.div>
+      </div>
 
       <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <div className="px-4 py-6 sm:px-0">
           <div className="bg-white shadow overflow-hidden sm:rounded-lg">
             <div className="px-4 py-5 sm:px-6 flex justify-between items-center">
               <div>
-                <h3 className="text-lg leading-6 font-medium text-gray-900">User List</h3>
-                <p className="mt-1 max-w-2xl text-sm text-gray-500">Total Users: {users.length}</p>
+                <h3 className="text-xl leading-6 font-medium text-primary-600">User List</h3>
+                <p className="mt-1 max-w-2xl text-xl text-primary-600">Total Users: {users.length}</p>
               </div>
               <div className="relative">
                 <input
                   type="text"
                   placeholder="Search users..."
-                  className="pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
@@ -98,7 +93,7 @@ const Users = () => {
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center">
                             <div className="flex-shrink-0 h-10 w-10">
-                              <FaUsers className="h-10 w-10 rounded-full text-gray-400" />
+                              <FaUsers className="h-10 w-10 rounded-full text-primary-600" />
                             </div>
                             <div className="ml-4">
                               <div className="text-sm font-medium text-gray-900">{user.name}</div>
@@ -131,7 +126,7 @@ const Users = () => {
                               whileHover={{ scale: 1.05 }}
                               whileTap={{ scale: 0.95 }}
                               onClick={() => handleMakeAdmin(user._id)}
-                              className="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-600 transition-colors flex items-center"
+                              className="bg-primary-500 text-white py-1 px-3 rounded hover:bg-primary-600 transition-colors flex items-center"
                               disabled={loading}
                             >
                               {loading ? <FaSpinner className="animate-spin mr-1" /> : <FaUserShield className="mr-1" />}
@@ -152,4 +147,4 @@ const Users = () => {
   );
 };
 
-export default Users;
+export default User;

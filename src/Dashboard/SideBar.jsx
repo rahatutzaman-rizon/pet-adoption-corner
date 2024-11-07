@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { FaPaw, FaHeart, FaPlus, FaUserFriends, FaChartBar, FaSignOutAlt, FaDog, FaCat, FaDonate, FaFirstOrderAlt, FaList, FaMoneyBill, FaShoppingBag } from 'react-icons/fa';
+import { FaPaw, FaHeart, FaPlus, FaUserFriends, FaChartBar, FaSignOutAlt, FaDonate, FaList, FaMoneyBill, FaShoppingBag, FaPaypal, FaFirstOrderAlt } from 'react-icons/fa';
 import { AuthContext } from '../contexts/AuthProvider';
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
@@ -22,7 +22,7 @@ const Sidebar = ({ closeSidebar }) => {
 
   useEffect(() => {
     if (data?.data) {
-      const seeUsers = data.data.filter(check => check.email === user?.email);
+      const seeUsers = data.data.filter(userItem => userItem.email === user?.email);
       const userType = seeUsers?.[0]?.role;
       setRole(userType);
     }
@@ -30,92 +30,83 @@ const Sidebar = ({ closeSidebar }) => {
 
   const navItems = [
     { name: 'Dashboard', icon: <FaChartBar />, href: '/admin/dashboard' },
-    { name: 'PetListing', icon: <FaPaw />, href: '/admin/dashboard/petlisting' },
-    { name: 'Adoption-List', icon: <FaList />, href: '/admin/dashboard/adoption-list' },
-    { name: 'Donation-List', icon: <FaMoneyBill />, href: '/admin/dashboard/donation-list' },
+    { name: 'Pet Listing', icon: <FaPaw />, href: '/admin/dashboard/petlisting' },
+    { name: 'Adoption List', icon: <FaList />, href: '/admin/dashboard/adoption-list' },
+    { name: 'Donation List', icon: <FaMoneyBill />, href: '/admin/dashboard/donation-list' },
     { name: 'My Donations', icon: <FaHeart />, href: '/admin/dashboard/mydonation' },
     { name: 'Shop', icon: <FaShoppingBag />, href: '/admin/dashboard/shop' },
-    { name: 'Donation Campaigns', icon: <FaDonate />, href: '/admin/dashboard/donation-campaign' },
-    { name: 'Create Campaign', icon: <FaPlus />, href: '/admin/dashboard/create-donation-campaign' },
-    { name: 'My Pets', icon: <FaPaw />, href: '/admin/dashboard/my-pet' },
-    { name: 'Add Pet', icon: <FaPlus />, href: '/admin/dashboard/add-pet' },
-    { name: 'Adoption Requests', icon: <FaUserFriends />, href: '/admin/dashboard/adoption' },
+    { name: 'Order', icon: <FaFirstOrderAlt />, href: '/admin/dashboard/order' },
+    { name: 'Payment History', icon: <FaPaypal />, href: '/admin/dashboard/payment' },
 
+
+    { name: 'Donation Campaigns', icon: <FaDonate />, href: '/admin/dashboard/donation-campaign' },
+  
     { name: 'Users', icon: <FaUserFriends />, href: '/admin/dashboard/users' },
-    { name: 'All Donations', icon: <FaHeart />, href: '/admin/dashboard/alldonations' },
-    { name: 'All Pets', icon: <FaPaw />, href: '/admin/dashboard/allpets' },
-    {name:"Order",icon:<FaFirstOrderAlt></FaFirstOrderAlt>,href:"/admin/dashboard/order"}
+    { name: 'Donations Pet', icon: <FaHeart />, href: '/admin/dashboard/alldonations' },
   ];
 
   const adminItems = [
     { name: 'Users', icon: <FaUserFriends />, href: '/admin/dashboard/users' },
     { name: 'All Donations', icon: <FaHeart />, href: '/admin/dashboard/alldonations' },
     { name: 'All Pets', icon: <FaPaw />, href: '/admin/dashboard/allpets' },
-    {name:"Order",icon:<FaFirstOrderAlt></FaFirstOrderAlt>,href:"/admin/dashboard/order"}
   ];
 
+  const displayedNavItems = role === 'admin' ? adminItems : navItems;
+
   return (
-    <div className="h-full flex flex-col bg-white shadow-lg ">
-      <div className="p-4">
-        <div className="flex items-center justify-center mb-6">
-          <div className="w-20 h-20 rounded-full overflow-hidden ring-2 ring-blue-500">
-            <img 
-              src={user?.photoURL || "https://i.ibb.co/M8zLm51/pet.jpg"} 
-              alt="User avatar"
-              className="w-full h-full object-cover"
-            />
+    <div className="flex flex-col h-screen bg-white shadow-lg">
+      {/* User Info Section */}
+      <div className="p-4 border-b">
+        <div className="flex items-center space-x-3">
+          <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
+            {user?.photoURL ? (
+              <img src={user.photoURL} alt="User" className="w-full h-full rounded-full" />
+            ) : (
+              <FaUserFriends className="text-gray-600" />
+            )}
+          </div>
+          <div>
+            <h3 className="font-medium text-gray-800">{user?.displayName || 'User'}</h3>
+          
           </div>
         </div>
-        <h2 className="text-xl font-semibold text-center mb-6">{user?.displayName || "Demo User"}</h2>
       </div>
-      <nav className="">
-        <ul className="px-2">
-          {navItems.map((item, index) => (
-            <li key={index} className="mb-2">
+
+      {/* Navigation Items */}
+      <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+        {isLoading ? (
+          <div className="flex items-center justify-center h-full">
+            <p className="text-primary animate-pulse font-medium">Loading navigation...</p>
+          </div>
+        ) : (
+          <nav className="p-4 space-y-2">
+            {displayedNavItems.map((item, index) => (
               <Link
+                key={index}
                 to={item.href}
                 onClick={closeSidebar}
-                className={`flex items-center p-2 rounded-lg transition-colors duration-200 ${
-                  location.pathname === item.href
-                    ? 'bg-blue-500 text-white'
-                    : 'hover:bg-gray-100 text-gray-700'
-                }`}
+                className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors duration-200 
+                  ${location.pathname === item.href 
+                    ? 'bg-primary text-white' 
+                    : 'text-gray-600 hover:bg-gray-100'
+                  }`}
               >
-                <span className="mr-3">{item.icon}</span>
-                <span>{item.name}</span>
+                <span className="text-lg">{item.icon}</span>
+                <span className="font-medium">{item.name}</span>
               </Link>
-            </li>
-          ))}
-          
-          {role === "admin" && (
-            <>
-              <li className="mt-6 mb-2 px-2 text-xs font-semibold text-gray-400 uppercase">
-                Admin
-              </li>
-              {adminItems.map((item, index) => (
-                <li key={index} className="mb-2">
-                  <Link
-                    to={item.href}
-                    onClick={closeSidebar}
-                    className={`flex items-center p-2 rounded-lg transition-colors duration-200 ${
-                      location.pathname === item.href
-                        ? 'bg-blue-500 text-white'
-                        : 'hover:bg-gray-100 text-gray-700'
-                    }`}
-                  >
-                    <span className="mr-3">{item.icon}</span>
-                    <span>{item.name}</span>
-                  </Link>
-                </li>
-              ))}
-            </>
-          )}
-        </ul>
-      </nav>
-      <div className="p-4">
-        <Link to="/logout" onClick={closeSidebar} className="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200">
-          <FaSignOutAlt className="mr-3" />
-          <span>Log out</span>
+            ))}
+          </nav>
+        )}
+      </div>
+
+      {/* Logout Button */}
+      <div className="p-4 border-t">
+        <Link
+          to="/logout"
+          className="flex items-center space-x-3 px-4 py-3 rounded-lg text-red-600 hover:bg-red-50 transition-colors duration-200"
+        >
+          <FaSignOutAlt className="text-lg" />
+          <span className="font-medium">Logout</span>
         </Link>
       </div>
     </div>
