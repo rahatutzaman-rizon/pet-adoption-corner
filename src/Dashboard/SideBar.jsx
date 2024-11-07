@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { FaPaw, FaHeart, FaPlus, FaUserFriends, FaChartBar, FaSignOutAlt, FaDog, FaCat, FaDonate, FaFirstOrderAlt } from 'react-icons/fa';
+import { FaPaw, FaHeart, FaPlus, FaUserFriends, FaChartBar, FaSignOutAlt, FaDog, FaCat, FaDonate, FaFirstOrderAlt, FaList, FaMoneyBill, FaShoppingBag } from 'react-icons/fa';
 import { AuthContext } from '../contexts/AuthProvider';
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
@@ -31,12 +31,20 @@ const Sidebar = ({ closeSidebar }) => {
   const navItems = [
     { name: 'Dashboard', icon: <FaChartBar />, href: '/admin/dashboard' },
     { name: 'PetListing', icon: <FaPaw />, href: '/admin/dashboard/petlisting' },
+    { name: 'Adoption-List', icon: <FaList />, href: '/admin/dashboard/adoption-list' },
+    { name: 'Donation-List', icon: <FaMoneyBill />, href: '/admin/dashboard/donation-list' },
     { name: 'My Donations', icon: <FaHeart />, href: '/admin/dashboard/mydonation' },
+    { name: 'Shop', icon: <FaShoppingBag />, href: '/admin/dashboard/shop' },
     { name: 'Donation Campaigns', icon: <FaDonate />, href: '/admin/dashboard/donation-campaign' },
     { name: 'Create Campaign', icon: <FaPlus />, href: '/admin/dashboard/create-donation-campaign' },
     { name: 'My Pets', icon: <FaPaw />, href: '/admin/dashboard/my-pet' },
     { name: 'Add Pet', icon: <FaPlus />, href: '/admin/dashboard/add-pet' },
     { name: 'Adoption Requests', icon: <FaUserFriends />, href: '/admin/dashboard/adoption' },
+
+    { name: 'Users', icon: <FaUserFriends />, href: '/admin/dashboard/users' },
+    { name: 'All Donations', icon: <FaHeart />, href: '/admin/dashboard/alldonations' },
+    { name: 'All Pets', icon: <FaPaw />, href: '/admin/dashboard/allpets' },
+    {name:"Order",icon:<FaFirstOrderAlt></FaFirstOrderAlt>,href:"/admin/dashboard/order"}
   ];
 
   const adminItems = [
@@ -47,7 +55,7 @@ const Sidebar = ({ closeSidebar }) => {
   ];
 
   return (
-    <div className="h-full flex flex-col bg-white shadow-lg">
+    <div className="h-full flex flex-col bg-white shadow-lg ">
       <div className="p-4">
         <div className="flex items-center justify-center mb-6">
           <div className="w-20 h-20 rounded-full overflow-hidden ring-2 ring-blue-500">
@@ -60,7 +68,7 @@ const Sidebar = ({ closeSidebar }) => {
         </div>
         <h2 className="text-xl font-semibold text-center mb-6">{user?.displayName || "Demo User"}</h2>
       </div>
-      <nav className="flex-1 overflow-y-auto">
+      <nav className="">
         <ul className="px-2">
           {navItems.map((item, index) => (
             <li key={index} className="mb-2">

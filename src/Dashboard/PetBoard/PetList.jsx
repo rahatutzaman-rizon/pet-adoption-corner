@@ -19,7 +19,7 @@ const PetList = () => {
 
   const fetchPets = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/pet-listing');
+      const response = await axios.get('https://pet-adoption-corner-server.vercel.app/pet-listing');
       setPets(response.data);
     } catch (error) {
       console.error('Error fetching pets:', error);
@@ -45,7 +45,7 @@ const PetList = () => {
       category: '',
       short_description: '',
       long_description: '',
-      amount: '',
+     
     });
   };
 
@@ -69,10 +69,10 @@ const PetList = () => {
   const savePet = async () => {
     try {
       if (currentPet._id) {
-        await axios.put(`http://localhost:5000/pet-listing/${currentPet._id}`, currentPet);
+        await axios.put(`https://pet-adoption-corner-server.vercel.app/pet-listing/${currentPet._id}`, currentPet);
         toast.success('Pet updated successfully', {
           position: 'top-right',
-          autoClose: 5000,
+          autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -80,7 +80,7 @@ const PetList = () => {
           progress: undefined,
         });
       } else {
-        await axios.post('http://localhost:5000/pet-listing', currentPet);
+        await axios.post('https://pet-adoption-corner-server.vercel.app/pet-listing', currentPet);
         toast.success('Pet added successfully', {
           position: 'top-right',
           autoClose: 5000,
@@ -109,7 +109,7 @@ const PetList = () => {
 
   const deletePet = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/pet-listing/${id}`);
+      await axios.delete(`https://pet-adoption-corner-server.vercel.app/pet-listing/${id}`);
       toast.success('Pet deleted', {
         position: 'top-right',
         autoClose: 5000,
@@ -152,7 +152,7 @@ const PetList = () => {
         draggable
         pauseOnHover
         theme="colored"
-        className="z-50 mt-4"
+        className="z-100 mt-12"
       />
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold text-primary-600">Pet Listing</h1>
@@ -183,12 +183,7 @@ const PetList = () => {
                 <td className="px-4 py-2">{pet.location}</td>
                 <td className="px-4 py-2">{pet.category}</td>
                 <td className="px-4 py-2 flex justify-center space-x-4">
-                  <button
-                    onClick={() => openEditModal(pet)}
-                    className="text-primary-600 hover:text-primary-800"
-                  >
-                    <FaEdit />
-                  </button>
+                  
                   <button
                     onClick={() => deletePet(pet._id)}
                     className="text-red-600 hover:text-red-800"

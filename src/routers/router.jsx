@@ -42,6 +42,10 @@ import Payment from "../components/Payment";
 import Success from "../components/Success";
 import Cancel from "../components/Cancel";
 import PetList from "../Dashboard/PetBoard/PetList";
+import PetAdoptionTable from "../Dashboard/PetBoard/AdoptionList";
+
+import CampaignsTable from "../Dashboard/PetBoard/DonationList";
+import ShopList from "../Dashboard/PetBoard/ShopList";
 
 
 
@@ -140,6 +144,9 @@ const router = createBrowserRouter([
       
       
       { path: "/admin/dashboard/add-pet", element: <AddPet></AddPet> },
+      { path: "/admin/dashboard/adoption-list", element: <PetAdoptionTable></PetAdoptionTable> },
+      { path: "/admin/dashboard/donation-list", element: <CampaignsTable></CampaignsTable> },
+      { path: "/admin/dashboard/shop", element: <ShopList></ShopList> },
 
       { path: "/admin/dashboard/my-pet", element: <MyPet></MyPet>,
       loader:()=> fetch('https://assignment-12-server-two-smoky.vercel.app/add-pet'), },
