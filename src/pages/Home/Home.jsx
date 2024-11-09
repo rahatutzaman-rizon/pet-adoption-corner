@@ -188,7 +188,7 @@ export const Home = () => {
               </p>
               
               <a
-                href="YOUR_YOUTUBE_LINK_HERE"
+                href="https://www.youtube.com/watch?v=D1f-nLQBqng"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 bg-red-600 text-white py-2 px-4 rounded hover:bg-red-700 transition duration-200"
