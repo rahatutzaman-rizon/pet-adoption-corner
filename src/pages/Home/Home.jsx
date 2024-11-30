@@ -15,6 +15,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 
 import Loading from './Loading';
+import PetAdoptionVolunteer from '../voluntire/voluntre';
 
 Modal.setAppElement('#root');
 
@@ -133,6 +134,10 @@ export const Home = () => {
 
         <div data-aos="fade-up" data-aos-duration="1000">
           <Ourabout />
+        </div>
+
+        <div data-aos="fade-up" data-aos-duration="1000">
+          <PetAdoptionVolunteer></PetAdoptionVolunteer>
         </div>
 
         {/* Call Now Button */}
