@@ -28,7 +28,7 @@ const PetFoodPage = () => {
   useEffect(() => {
     const fetchPetFoods = async () => {
       try {
-        const response = await axios.get('https://assignment-12-server-two-smoky.vercel.app/shop');
+        const response = await axios.get('https://pet-adoption-corner-server.vercel.app/shop');
         setPetFoods(response.data);
         setLoading(false);
       } catch (error) {
@@ -65,7 +65,7 @@ const PetFoodPage = () => {
 
     try {
         const response = await axios.post(
-            'http://localhost:5000/order',
+            'https://pet-adoption-corner-server.vercel.app/order',
             orderDetails,
             {
                 headers: {

@@ -10,7 +10,7 @@ const OrderTable = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await fetch('https://assignment-12-server-two-smoky.vercel.app/order');
+        const response = await fetch('https://pet-adoption-corner-server.vercel.app/order');
         const data = await response.json();
         setOrders(data);
         setIsLoading(false);
