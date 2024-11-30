@@ -142,11 +142,11 @@ export const Home = () => {
 
         {/* Call Now Button */}
         <div 
-          className="fixed bottom-20 right-5 flex items-center bg-blue-600 text-white px-4 py-2 rounded-full shadow-lg hover:bg-blue-700 transition-colors duration-300 cursor-pointer z-40"
+          className="fixed bottom-20 right-5 flex items-center bg-primary-600 text-white px-4 py-2 rounded-full shadow-lg hover:bg-blue-700 transition-colors duration-300 cursor-pointer z-40"
           data-aos="fade-left"
         >
           <FaPhoneAlt className="mr-2" />
-          <span>Call Now: +1234567890</span>
+          <span>Call Now: +8801771276400</span>
         </div>
 
         {/* Scroll to Top Button */}
@@ -165,13 +165,13 @@ export const Home = () => {
           isOpen={isModalOpen}
           onRequestClose={() => setIsModalOpen(false)}
           contentLabel="Welcome Modal"
-          className="max-w-md mx-auto my-12 p-6 bg-white rounded-lg shadow-lg border animate-modalEntry"
+          className="max-w-md mx-auto my-16 p-6 bg-white rounded-lg shadow-lg border animate-modalEntry"
           overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
         >
           <div className="space-y-6">
             <div className="text-center">
               <div className="inline-block p-3 bg-blue-100 rounded-full mb-4">
-                <svg className="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <svg className="w-10 h-10 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
               </div>
@@ -180,11 +180,7 @@ export const Home = () => {
               </h2>
             </div>
             
-            <p className="text-gray-700 text-center">
-              Find your perfect companion among our carefully curated pet categories!
-            </p>
-
-            <div className="bg-gray-50 p-4 rounded-lg">
+          <div className="bg-gray-50 p-4 rounded-lg">
               <h3 className="text-lg font-medium text-gray-800 mb-2">
                 New to Our Platform?
               </h3>
@@ -205,9 +201,9 @@ export const Home = () => {
 
             <button
               onClick={() => setIsModalOpen(false)}
-              className="block w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-200"
+              className="block w-full bg-primary-600 text-white py-2 px-4 rounded hover:bg-primary-400 transition duration-200"
             >
-              Start Exploring
+              Start Exploring this website
             </button>
           </div>
         </Modal>

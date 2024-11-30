@@ -3,7 +3,7 @@ import Swal from "sweetalert2";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../../contexts/AuthProvider";
 import { motion } from "framer-motion";
-import { FaPaw, FaMapMarkerAlt, FaPhone, FaEnvelope } from "react-icons/fa";
+import {  FaMapMarkerAlt, FaPhone } from "react-icons/fa";
 
 const Moredetails = () => {
   const { user } = useContext(AuthContext);

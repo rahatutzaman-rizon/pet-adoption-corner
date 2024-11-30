@@ -1,6 +1,6 @@
 // src/components/TestimonialPage.js
 
-import React from "react";
+
 import { FaPaw, FaStar } from "react-icons/fa"; // For icons
 
 const testimonials = [
